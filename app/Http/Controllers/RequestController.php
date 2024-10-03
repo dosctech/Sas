@@ -38,62 +38,20 @@ class RequestController extends Controller
             'dry_seal'
         ]));
     
-        // Store data in session, including the ID
-        session(['formData' => array_merge($request->only([
-            'user_type', 
-            'document_type', 
-            'name', 
-            'student_number', 
-            'email', 
-            'contact', 
-            'dry_seal'
-        ]), ['id' => $requestData->id])]);
-    
         // Redirect to the read page with a success message
         return redirect()->route('read')->with('success', 'Request submitted successfully!');
     }
 
-    // Display the submitted request data
+    // Display all submitted request data
     public function read()
     {
-        // Retrieve the form data from the session
-        $formData = session('formData');
+        // Retrieve all form data from the database
+        $formData = RequestForm::all();
 
         // Return the read view with the form data
         return view('read', compact('formData'));
     }
 
     // Show the edit form for a specific request
-    public function edit($id)
-    {
-        $requestData = RequestForm::findOrFail($id); // Ensure to handle not found case
-
-        // Return the edit view with the request data
-        return view('edit-request', compact('requestData'));
-    }
-
-    // Update the request data in the database
-    public function update(Request $request, $id)
-    {
-        // Validate the input data
-        $validatedData = $request->validate([
-            'user_type' => 'required|string',
-            'document_type' => 'required|string',
-            'name' => 'required|string|max:255',
-            'student_number' => 'required|numeric',
-            'email' => 'required|email',
-            'contact' => 'required|numeric',
-            'dry_seal' => 'required|string',
-        ]);
-    
-        // Find the request record by id and update it
-        $requestData = RequestForm::findOrFail($id);
-        $requestData->update($validatedData);
-    
-        // Redirect after updating
-        return redirect()->route('read')->with('success', 'Request updated successfully.');
-    }
-    
-    
     
 }

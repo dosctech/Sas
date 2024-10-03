@@ -4,7 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RequestController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\AdminController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,14 +25,39 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Home route
-Route::get('/home', [HomeController::class, 'index']);
+
+
+Route::get('/home',[HomeController::class, "index"]);
+Route::get('/admin/requests', [AdminController::class, 'requests'])->name('admin.adminreq');
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/requests', [AdminController::class, 'index'])->name('admin.requests');
+    Route::get('/admin/request/{id}', [AdminController::class, 'viewRequest'])->name('admin.view-request');
+    Route::get('/admin/requests/edit/{id}', [AdminController::class, 'edit'])->name('edit-request');
+    Route::post('/admin/requests/update/{id}', [AdminController::class, 'update'])->name('update-request');
+});
+
+
+Route::get('/request/read/{id}', [RequestController::class, 'read'])->name('read');
+
+Route::get('/admin/requests', [AdminController::class, 'index'])->name('admin.requests');
+
+Route::post('/request/accept/{id}', [RequestController::class, 'accept'])->name('accept-request');
+Route::post('/request/reject/{id}', [RequestController::class, 'reject'])->name('reject-request');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/requests', [RequestController::class, 'index'])->name('all-requests');
+   
+    Route::post('/request/submit', [RequestController::class, 'submitForm'])->name('submit-request');
+});
 
 // Request routes
 Route::get('/request', [RequestController::class, 'showForm'])->name('request');
 Route::post('/submit-request', [RequestController::class, 'submitForm'])->name('submit-request');
 Route::get('/read', [RequestController::class, 'read'])->name('read');
-Route::get('/request/edit/{id}', [RequestController::class, 'edit'])->name('edit-request');
-Route::post('/request/update/{id}', [RequestController::class, 'update'])->name('update-request');
+Route::get('/request/edit/{id}', [AdminController::class, 'edit'])->name('edit-request');
+Route::post('/request/update/{id}', [AdminController::class, 'update'])->name('update-request');
+Route::get('/homeuser', [RequestController::class, 'showForm'])->name('homeuser');
 
 
 // Profile routes

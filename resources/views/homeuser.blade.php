@@ -11,7 +11,7 @@
     
     <!-- Styles -->
     <style>
-       body {
+        body {
             font-family: 'Nunito', sans-serif;
             background-color: #f8f9fa; 
             color: #343a40; 
@@ -20,7 +20,6 @@
             display: flex;
             flex-direction: column; 
             height: 100vh; 
-            overflow: hidden; /* Prevent scrolling */
             position: relative; 
         }
         header {
@@ -47,13 +46,13 @@
         .container {
             flex: 1; 
             display: flex;
-            flex-direction: column;
+            flex-direction: column; /* Change to column to stack elements */
             align-items: flex-start; 
-            justify-content: center;
-            text-align: left;
-            margin-left: 160px;
-            padding: 20px;
-            overflow: hidden; /* Prevent container overflow */
+            justify-content: center; /* Center vertically */
+            text-align: left; 
+            position: relative; 
+            margin-left: 160px; /* Adjust as needed */
+            padding: 20px; /* Added padding for better spacing */
         }
         .title {
             font-size: 36px; 
@@ -83,7 +82,6 @@
         .button-container {
             margin-right: 10px; /* Push buttons to the right */
         }
-        /* Footer styling */
         footer {
             background-color: #347928; /* Footer background color */
             color: white; /* Footer text color */
@@ -103,10 +101,8 @@
             @if (Route::has('login'))
                 @auth
                     <a href="{{ url('/dashboard') }}" class="btn">Dashboard</a>
-                @else
-                    <a href="{{ route('login') }}" class="btn">Log in</a>
+                    <a href="{{ route('request') }}" class="btn">Request</a>
                 @endauth
-                <a href="{{ route('register') }}" class="btn">Register</a>
             @endif
         </div>
     </header>
@@ -114,11 +110,10 @@
     <div class="container">
         <div class="title">Welcome to University of Pangasinan<br>"Making Lives Better Through Education"<br> Student Appointment System</div>
         <div class="note">Empowering Students, One Appointment at a Time! Streamline your journey at the University of Pangasinan with our easy-to-use appointment system.
-        Connect, collaborate, and conquer your academic goals effortlessly!<br></div>
+        Connect, collaborate, and conquer your academic goals effortlessly!</div>
         <img src="{{ asset('image/OIP.jpg') }}" alt="University Logo" class="logo"> <!-- Use asset() function -->
     </div>
 
-    <!-- Footer Section -->
     <footer>
         <p>&copy; {{ date('Y') }} University of Pangasinan. All rights reserved.</p>
         <p>Contact us: phinmaed@gmail.com</p>

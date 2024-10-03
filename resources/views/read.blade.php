@@ -96,7 +96,7 @@
             </div>
         @endif
 
-        @if($formData)
+        @if($formData->count())
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Request Details</h5>
@@ -109,22 +109,29 @@
                             <th>Student Number</th>
                             <th>Email</th>
                             <th>Contact</th>
-                            <th>Action</th> <!-- New Action column -->
+                            <th>Status</th>
+                            <th>Actions</th> <!-- Action column for buttons -->
                         </tr>
+                        @foreach($formData as $request)
                         <tr>
-                            <td>{{ $formData['user_type'] }}</td>
-                            <td>{{ $formData['document_type'] }}</td>
-                            <td>{{ $formData['dry_seal'] }}</td>
-                            <td>{{ $formData['name'] }}</td>
-                            <td>{{ $formData['student_number'] }}</td>
-                            <td>{{ $formData['email'] }}</td>
-                            <td>{{ $formData['contact'] }}</td>
+                            <td>{{ $request->user_type }}</td>
+                            <td>{{ $request->document_type }}</td>
+                            <td>{{ $request->dry_seal }}</td>
+                            <td>{{ $request->name }}</td>
+                            <td>{{ $request->student_number }}</td>
+                            <td>{{ $request->email }}</td>
+                            <td>{{ $request->contact }}</td>
+                            <td>{{ $request->status ?? 'Pending' }}</td> <!-- Assuming a status column; default to 'Pending' if not set -->
                             <td>
-                                <a href="{{ route('edit-request', ['id' => session('formData.id')]) }}" class="btn">Edit</a>
-                            </td> <!-- Edit button in the Action column -->
+                            </td>
                         </tr>
+                        @endforeach
                     </table>
                 </div>
+            </div>
+        @else
+            <div class="alert alert-info">
+                No requests submitted yet.
             </div>
         @endif
 

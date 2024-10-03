@@ -71,7 +71,7 @@
 
     <!-- Submit button -->
     <button type="submit" class="btn btn-primary">Update Request</button>
-    <a href="{{ route('read') }}" class="btn btn-secondary">Cancel</a>
+<a href="{{ route('admin.requests') }}" class="btn btn-secondary">Cancel</a>
 </form>
 
     </div>

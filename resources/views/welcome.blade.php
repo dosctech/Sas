@@ -11,7 +11,7 @@
     
     <!-- Styles -->
     <style>
-       body {
+        body {
             font-family: 'Nunito', sans-serif;
             background-color: #f8f9fa; 
             color: #343a40; 
@@ -20,25 +20,26 @@
             display: flex;
             flex-direction: column; 
             height: 100vh; 
-            overflow: hidden; /* Prevent scrolling */
+            overflow: hidden; /* Prevent any scrolling */
             position: relative; 
         }
         header {
             display: flex;
-            justify-content: space-between; /* Space between items in header */
-            align-items: center; /* Center items vertically */
-            padding: 15px; 
-            background-color: white; 
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+            justify-content: space-between; /* Space between logo and buttons */
+            align-items: center; /* Align items vertically */
+            padding: 5px;
+            background-color: white;
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
         }
         .btn {
             background-color: #347928; 
             color: white; 
-            padding: 10px 20px; 
-            margin: 0 10px; 
+            padding: 6px 12px; /* Adjusted padding for smaller size */
+            margin-left: 10px; 
             text-decoration: none; 
             border-radius: 5px;
             display: inline-block; 
+            font-size: 14px; /* Adjusted font size */
             transition: background-color 0.3s; 
         }
         .btn:hover {
@@ -47,62 +48,78 @@
         .container {
             flex: 1; 
             display: flex;
-            flex-direction: column;
+            flex-direction: column; 
             align-items: flex-start; 
-            justify-content: center;
-            text-align: left;
-            margin-left: 160px;
-            padding: 20px;
-            overflow: hidden; /* Prevent container overflow */
+            justify-content: center; 
+            text-align: left; 
+            margin-left: 160px; 
+            padding: 20px; 
         }
         .title {
             font-size: 36px; 
-            margin-bottom: 10px; /* Reduced margin for closer spacing */
+            margin-bottom: 10px;
+            opacity: 0;
+            animation: fadeInMove 2s forwards;
         }
         .note {
-            font-size: 18px; /* Adjusted size for the note */
-            margin-top: 10px; /* Space above the note */
-            line-height: 1.5; /* Improved readability */
-            max-width: 600px; /* Set max width for the note */
+            font-size: 18px;
+            margin-top: 10px; 
+            line-height: 1.5; 
+            max-width: 600px; 
+            opacity: 0;
+            animation: fadeInMove 2s forwards 0.5s;
         }
         .logo {
             position: absolute; 
             right: 20px; 
-            top: 50%; 
+            top: 55%; 
             transform: translateY(-50%); 
             opacity: 0.7; 
             width: 40vw; 
             height: 640px; 
+            margin-right: -20px;
             z-index: -1;
         }
         .small-logo {
-            width: 80px; /* Set size for small logo */
-            height: auto; /* Maintain aspect ratio */
-            margin-left: 155px; /* Space between small logo and buttons */
+            width: 80px; 
+            height: auto;
+            margin-left: 150px;
         }
         .button-container {
-            margin-right: 10px; /* Push buttons to the right */
+            margin-right: 40px;
+            display: flex; /* Arrange buttons horizontally */
+            gap: 10px; /* Space between buttons */
         }
-        /* Footer styling */
         footer {
-            background-color: #347928; /* Footer background color */
-            color: white; /* Footer text color */
-            text-align: center; /* Center text in footer */
-            padding: 5px 0; /* Reduced padding for smaller footer */
-            position: relative; /* Position footer at the bottom */
-            bottom: 0; /* Stick to the bottom */
-            width: 100%; /* Full width */
-            font-size: 12px; /* Reduced font size */
+            background-color: #347928;
+            color: white;
+            text-align: center;
+            padding: 8px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            font-size: 9px;
+        }
+
+        @keyframes fadeInMove {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
 <body class="antialiased">
     <header>
-        <img src="{{ asset('image/UniLogo.png') }}" alt="Small Logo" class="small-logo"> <!-- Add small logo -->
-        <div class="button-container"> <!-- New class for buttons -->
+        <img src="{{ asset('image/UniLogo.png') }}" alt="Small Logo" class="small-logo"> <!-- Logo aligned to the left -->
+        <div class="button-container"> <!-- Buttons aligned to the right -->
             @if (Route::has('login'))
                 @auth
-                    <a href="{{ url('/dashboard') }}" class="btn">Dashboard</a>
+                   
                 @else
                     <a href="{{ route('login') }}" class="btn">Log in</a>
                 @endauth
@@ -114,11 +131,10 @@
     <div class="container">
         <div class="title">Welcome to University of Pangasinan<br>"Making Lives Better Through Education"<br> Student Appointment System</div>
         <div class="note">Empowering Students, One Appointment at a Time! Streamline your journey at the University of Pangasinan with our easy-to-use appointment system.
-        Connect, collaborate, and conquer your academic goals effortlessly!<br></div>
-        <img src="{{ asset('image/OIP.jpg') }}" alt="University Logo" class="logo"> <!-- Use asset() function -->
+        Connect, collaborate, and conquer your academic goals effortlessly!</div>
+        <img src="{{ asset('image/OIP.jpg') }}" alt="University Logo" class="logo">
     </div>
 
-    <!-- Footer Section -->
     <footer>
         <p>&copy; {{ date('Y') }} University of Pangasinan. All rights reserved.</p>
         <p>Contact us: phinmaed@gmail.com</p>

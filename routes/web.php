@@ -27,20 +27,18 @@ Route::get('/dashboard', function () {
 // Home route
 
 
-Route::get('/home',[HomeController::class, "index"]);
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/admin/requests', [AdminController::class, 'requests'])->name('admin.adminreq');
-
 Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin/requests', [AdminController::class, 'index'])->name('admin.requests');
     Route::get('/admin/request/{id}', [AdminController::class, 'viewRequest'])->name('admin.view-request');
     Route::get('/admin/requests/edit/{id}', [AdminController::class, 'edit'])->name('edit-request');
     Route::post('/admin/requests/update/{id}', [AdminController::class, 'update'])->name('update-request');
 });
 
+Route::delete('/request/{id}', [AdminController::class, 'destroy'])->name('delete-request');
 
 Route::get('/request/read/{id}', [RequestController::class, 'read'])->name('read');
 
-Route::get('/admin/requests', [AdminController::class, 'index'])->name('admin.requests');
 
 Route::post('/request/accept/{id}', [RequestController::class, 'accept'])->name('accept-request');
 Route::post('/request/reject/{id}', [RequestController::class, 'reject'])->name('reject-request');

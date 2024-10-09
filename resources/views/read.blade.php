@@ -69,6 +69,58 @@
             color: #333;
         }
 
+        .notification {
+            position: relative;
+            display: inline-block;
+            margin-left: auto;
+            cursor: pointer; /* Make it clear that the icon is clickable */
+        }
+
+        .notification-icon {
+            font-size: 24px;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            min-width: 300px; /* Increased minimum width for horizontal expansion */
+            max-height: 300px; /* Set a maximum height */
+            overflow-y: auto; /* Enable scrolling if the content is too long */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            padding: 10px; /* Added padding for better spacing */
+        }
+
+        .dropdown-content {
+            display: flex; /* Use flexbox for horizontal alignment */
+            flex-direction: column; /* Stack items vertically */
+            gap: 5px; /* Space between items */
+        }
+
+        .dropdown-content p {
+            margin: 0;
+            cursor: pointer;
+            padding: 5px 0; /* Adds some padding for a better clickable area */
+        }
+
+        .dropdown-content p:hover {
+            background-color: #f1f1f1; /* Highlight effect on hover */
+        }
+
         .btn {
             display: inline-block;
             padding: 10px 20px;
@@ -85,10 +137,67 @@
             background-color: #e68a00;
         }
     </style>
+    <script>
+        // Function to toggle the dropdown visibility
+        function toggleDropdown() {
+            const dropdown = document.getElementById('notificationDropdown');
+            const badge = document.getElementById('notificationBadge');
+
+            // Clear the notification badge
+            badge.style.display = 'none';
+
+            // Toggle the dropdown visibility
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Close the dropdown if clicked outside of it
+        window.onclick = function(event) {
+            if (!event.target.matches('.notification-icon')) {
+                const dropdowns = document.getElementsByClassName("dropdown");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    const openDropdown = dropdowns[i];
+                    if (openDropdown.style.display === 'block') {
+                        openDropdown.style.display = 'none';
+                    }
+                }
+
+                // Show the notification badge when dropdown is closed
+                document.getElementById('notificationBadge').style.display = 'block';
+            }
+        }
+
+        // Function to handle click on dropdown items
+        function handleDropdownClick(message) {
+            alert(message); // You can change this to any action you want to perform
+        }
+    </script>
 </head>
 <body>
     <div class="container mt-5">
         <h1 class="mb-4">Submitted Request Data</h1>
+
+        <!-- Notification Icon -->
+        <div class="notification" onclick="toggleDropdown()">
+            <span class="notification-icon">&#128276;</span>
+            <span class="notification-badge" id="notificationBadge">{{ $acceptedCount + $rejectedCount }}</span>
+            <div class="dropdown" id="notificationDropdown">
+                <div class="dropdown-content">
+                    @foreach($formData as $request)
+                        @if($request->status === 'Accepted')
+                            <p onclick="handleDropdownClick('Student: {{ $request->name }}, Number: {{ $request->student_number }} - Your request is now accepted. ✔️')">
+                                ✔️ {{ $request->name }} ({{ $request->student_number }}) - Your request is now accepted.
+                                <br>See you at Registrar University of Pangasinan.
+                            </p>
+                        @elseif($request->status === 'Rejected')
+                            <p onclick="handleDropdownClick('Student: {{ $request->name }}, Number: {{ $request->student_number }} - Your request is now rejected. ❌')">
+                                ❌ {{ $request->name }} ({{ $request->student_number }}) - Your request is now rejected.
+                                <br>See you at Registrar University of Pangasinan.
+                            </p>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+        </div>
 
         @if(session('success'))
             <div class="alert alert-success">
@@ -110,7 +219,6 @@
                             <th>Email</th>
                             <th>Contact</th>
                             <th>Status</th>
-                            <th>Actions</th> <!-- Action column for buttons -->
                         </tr>
                         @foreach($formData as $request)
                         <tr>
@@ -122,8 +230,6 @@
                             <td>{{ $request->email }}</td>
                             <td>{{ $request->contact }}</td>
                             <td>{{ $request->status ?? 'Pending' }}</td> <!-- Assuming a status column; default to 'Pending' if not set -->
-                            <td>
-                            </td>
                         </tr>
                         @endforeach
                     </table>

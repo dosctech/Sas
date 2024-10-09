@@ -19,5 +19,6 @@ class RequestForm extends Model
         'email',
         'contact',
         'dry_seal',
+        'id',
     ];
 }

@@ -16,10 +16,17 @@
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
+            <div class="relative">
+                <x-text-input id="password" class="block mt-1 w-full pr-20"
+                              type="password"
+                              name="password"
+                              required autocomplete="current-password" />
+
+                <!-- Show/Hide password toggle -->
+                <button type="button" id="togglePassword" onclick="togglePasswordVisibility()" class="absolute right-2 top-2 text-gray-600 hover:text-gray-900">
+                    <span id="toggleText">Show</span>
+                </button>
+            </div>
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
@@ -39,11 +46,39 @@
                 </a>
             @endif
 
-            
-
-            <x-primary-button class="ml-3">
+            <!-- Modify the button with custom hover styles -->
+            <x-primary-button class="ml-3 custom-login-button">
                 {{ __('Log in') }}
             </x-primary-button>
         </div>
     </form>
+
+    <!-- Toggle password visibility script -->
+    <script>
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById('password');
+            const toggleText = document.getElementById('toggleText');
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+
+            passwordInput.setAttribute('type', type);
+            
+            // Toggle the text between "Show" and "Hide"
+            toggleText.textContent = type === 'password' ? 'Show' : 'Hide';
+        }
+    </script>
+
+    <style>
+        .custom-login-button {
+            background-color: #347928; /* Set custom green color */
+            color: white; /* Set text color to white */
+            border: none; /* Remove default border */
+            padding: 0.5rem 1rem; /* Add padding */
+            border-radius: 0.375rem; /* Add rounded corners */
+            transition: background-color 0.3s ease; /* Smooth transition for background color */
+        }
+
+        .custom-login-button:hover {
+            background-color: #2c621f; /* Darker green on hover */
+        }
+    </style>
 </x-guest-layout>

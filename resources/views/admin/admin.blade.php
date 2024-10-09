@@ -9,13 +9,47 @@
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-            background-size: cover; /* Cover the entire viewport */
-            background-position: center; /* Center the image */
+            background-size: cover;
+            background-position: center;
             color: #333;
             margin: 0;
             padding: 0;
             display: flex;
             overflow: hidden;
+            flex-direction: column;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center; /* Center the content */
+            align-items: center;
+            background-color: green;
+            color: white;
+            padding: 15px 30px;
+            position: relative;
+            z-index: 1000;
+            height: 80px; /* Ensure there's enough height for the navbar */
+        }
+
+        .navbar h1 {
+            margin: 0;
+            font-size: 56px; /* Increased font size */
+            text-align: center; /* Center the text */
+            margin-left: 150px;
+            flex: 1; /* Allow the title to take available space */
+        }
+
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .navbar a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
         }
 
         .sidebar {
@@ -57,7 +91,7 @@
             position: fixed;
             left: 20px;
             top: 20px;
-            background-color: green; /* Changed to green */
+            background-color: white;
             color: white;
             border: none;
             padding: 10px;
@@ -67,13 +101,13 @@
             display: flex;
             flex-direction: column;
             justify-content: space-around;
-            height: 30px;
+            height: 35px;
             width: 35px;
-            transition: transform 0.3s ease;
+            transition: transform 0.5s ease;
         }
 
         .toggle-btn span {
-            background-color: green; /* Changed to green */
+            background-color: black;
             height: 3px;
             width: 100%;
             border-radius: 2px;
@@ -97,7 +131,7 @@
             padding: 20px;
             flex-grow: 1;
             transition: margin-left 0.3s ease;
-            height: 100vh;
+            height: calc(100vh - 80px); /* Adjust for navbar height */
             overflow-y: auto;
         }
 
@@ -130,7 +164,6 @@
             margin: 0;
             font-size: 1.5em;
             font-weight: bold;
-    
         }
 
         .card {
@@ -145,17 +178,17 @@
         .card-title {
             font-size: 1.5em;
             font-weight: 500;
-            color: black; /* Keeping the title black */
+            color: black;
             margin-bottom: 15px;
-            border-bottom: 2px solid green; /* Changed to green */
+            border-bottom: 2px solid green;
             padding-bottom: 10px;
         }
 
         .content h1 {
             text-align: center;
-            color: green; /* Changed to green */
+            color: green;
             margin-bottom: 20px;
-            font-size: 4em; /* Increased font size */
+            font-size: 4em;
             font-weight: 700;
         }
 
@@ -173,6 +206,60 @@
                 margin-left: 0;
                 padding-left: 10px;
             }
+        }
+        .notification {
+            position: relative;
+            display: inline-block;
+            margin-left: auto;
+            margin-right: 40px;
+            cursor: pointer; /* Make it clear that the icon is clickable */
+        }
+
+        .notification-icon {
+            font-size: 24px;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 10px;
+            right: -10px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+        }
+
+        .dropdown {
+            margin-left:-350px;
+            display: none;
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            min-width: 300px; /* Increased minimum width for horizontal expansion */
+            max-height: 300px; /* Set a maximum height */
+            overflow-y: auto; /* Enable scrolling if the content is too long */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            padding: 10px; /* Added padding for better spacing */
+        }
+
+        .dropdown-content {
+            display: flex; /* Use flexbox for horizontal alignment */
+            flex-direction: column; /* Stack items vertically */
+            gap: 5px; /* Space between items */
+        }
+
+        .dropdown-content p {
+            color:#000;
+            margin: 0;
+            cursor: pointer;
+            padding: 5px 0; /* Adds some padding for a better clickable area */
+        }
+
+        .dropdown-content p:hover {
+            background-color: #f1f1f1; /* Highlight effect on hover */
         }
     </style>
     <script>
@@ -200,58 +287,125 @@
         <span></span>
     </button>
 
-    <div class="sidebar">
-        <h3>Dashboard</h3>
-        <a href="#deleted">Student Requests</a>
-        <a href="#accepted">Accepted Requests</a>
-        <a href="#rejected">Rejected Requests</a>
-        <a href="#deleted">Deleted Requests</a>
-        <a href="#settings">Settings</a>
-        <x-app-layout></x-app-layout>
+    <div class="navbar">
+        <h1>Admin Dashboard</h1>
+        
+        <div class="notification" onclick="toggleDropdown()">
+            <span class="notification-icon">&#128276;</span>
+            <span class="notification-badge" id="notificationBadge"></span>
+            <div class="dropdown" id="notificationDropdown">
+                <div class="dropdown-content">
+                    @foreach($formData as $request)
+                    @if($request->recentRequest)
+                        @else
+                            <p onclick="handleDropdownClick('Student: {{ $request->name }}, Number: {{ $request->student_number }} - 🕒New Request.')">
+                            🕒 <b>New Request</b> <br> <b>{{ $request->user_type}} - {{ $request->name }} ({{ $request->student_number }})</b> -
+                            <br>Please visit the Registrar at the University of Pangasinan for further information. <br> <b>{{ $request->status }}</b>
+                            </p>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+        </div>
+        <div>
+            <x-app-layout></x-app-layout> <!-- Optional, adjust as needed -->
+        </div>
     </div>
 
-    <div class="content">
-        <h1>Admin Dashboard</h1>
+    <div class="sidebar">
+    <a href="{{route ('home')}}">Dashboard</a>
+        <!-- Use route helper for the admin requests page -->
+        <a href="{{ route('admin.adminreq') }}">Student Requests</a>
+        
+    </div>
 
+
+    <div class="content">
         <div class="dashboard">
             <div>
-                <h3>Total Appointments</h3>
-                <p>150</p>
+                <h3>Total Requests</h3>
+                <p>{{ $totalRequests }}</p>
             </div>
             <div>
                 <h3>Accepted</h3>
-                <p>120</p>
+                <p>{{ $acceptedRequests }}</p>
             </div>
             <div>
                 <h3>Rejected</h3>
-                <p>20</p>
+                <p>{{ $rejectedRequests }}</p>
             </div>
         </div>
 
-        <div class="card" id="accepted">
-            <div class="card-title">Accepted Requests</div>
-            <p>Here you can view all accepted requests. Use the table below to manage appointments.</p>
-            <!-- Add your table or content for accepted requests -->
-        </div>
+        <!-- Student Requests Section -->
+        <div class="card">
+                <div class="card-title">Recent Requests</div>
+                <ul>
+                    @foreach ($recentRequests as $request)
+                        @if ($request->status === 'pending') <!-- Assuming 'Pending' is the status for recent requests -->
+                            <li>{{ $request->name }} - {{ $request->status }}</li>
+                        @endif
+                    @endforeach
+                </ul>
+            </div>
 
-        <div class="card" id="rejected">
-            <div class="card-title">Rejected Requests</div>
-            <p>Here you can view all rejected requests and reasons for rejection.</p>
-            <!-- Add your table or content for rejected requests -->
-        </div>
+            <div class="card" id="accepted">
+                <div class="card-title">Accepted Requests</div>
+                <ul>
+                    @foreach ($recentRequests as $request)
+                        @if ($request->status === 'Accepted') <!-- Filter accepted requests -->
+                            <li>{{ $request->name }} - {{ $request->status }}</li>
+                        @endif
+                    @endforeach
+                </ul>
+            </div>
 
-        <div class="card" id="deleted">
-            <div class="card-title">Deleted Requests</div>
-            <p>Manage deleted requests here. You can choose to restore or permanently delete requests.</p>
-            <!-- Add your table or content for deleted requests -->
-        </div>
+            <div class="card" id="rejected">
+                <div class="card-title">Rejected Requests</div>
+                <ul>
+                    @foreach ($recentRequests as $request)
+                        @if ($request->status === 'Rejected') <!-- Filter rejected requests -->
+                            <li>{{ $request->name }} - {{ $request->status }}</li>
+                        @endif
+                    @endforeach
+                </ul>
+            </div>
 
-        <div class="card" id="settings">
-            <div class="card-title">Settings</div>
-            <p>Configure your admin settings and system preferences.</p>
-            <!-- Add your settings options -->
-        </div>
+
     </div>
+    <script>
+        // Function to toggle the dropdown visibility
+        function toggleDropdown() {
+            const dropdown = document.getElementById('notificationDropdown');
+            const badge = document.getElementById('notificationBadge');
+
+            // Clear the notification badge
+            badge.style.display = 'none';
+
+            // Toggle the dropdown visibility
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Close the dropdown if clicked outside of it
+        window.onclick = function(event) {
+            if (!event.target.matches('.notification-icon')) {
+                const dropdowns = document.getElementsByClassName("dropdown");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    const openDropdown = dropdowns[i];
+                    if (openDropdown.style.display === 'block') {
+                        openDropdown.style.display = 'none';
+                    }
+                }
+
+                // Show the notification badge when dropdown is closed
+                document.getElementById('notificationBadge').style.display = 'block';
+            }
+        }
+
+        // Function to handle click on dropdown items
+        function handleDropdownClick(message) {
+            alert(message); // You can change this to any action you want to perform
+        }
+    </script>
 </body>
 
 </html>

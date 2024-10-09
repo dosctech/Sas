@@ -7,18 +7,36 @@
     <title>Submitted Request Data</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
+        /* Add your existing styles here */
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #f4f7fa;
+            background-size: cover;
+            background-position: center;
             color: #333;
             margin: 0;
             padding: 0;
-            background-image: url('image/UniLogoj.jpg');
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: cover;
             display: flex;
             overflow: hidden;
+            flex-direction: column;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: green;
+            color: white;
+            padding: 15px 30px;
+            position: relative;
+            z-index: 1000;
+            height: 80px;
+        }
+
+        .navbar h1 {
+            margin: 0;
+            font-size: 56px;
+            text-align: center;
+            flex: 1;
         }
 
         .sidebar {
@@ -30,7 +48,7 @@
             transition: left 0.3s ease;
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
             z-index: 1000;
-            padding: 20px;
+            padding: 30px;
         }
 
         .sidebar.open {
@@ -39,6 +57,7 @@
 
         .sidebar h3 {
             color: #333;
+            margin-top: 50px;
         }
 
         .sidebar a {
@@ -46,7 +65,7 @@
             color: #000;
             text-decoration: none;
             padding: 10px;
-            margin: 5px 0;
+            margin: 10px 0;
             border-radius: 5px;
             transition: background-color 0.3s;
         }
@@ -57,15 +76,41 @@
 
         .toggle-btn {
             position: fixed;
-            left: 10px;
-            top: 10px;
-            background-color: #4A90E2;
+            left: 20px;
+            top: 20px;
+            background-color: white;
             color: white;
             border: none;
             padding: 10px;
             cursor: pointer;
             border-radius: 5px;
             z-index: 1001;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            height: 35px;
+            width: 35px;
+            transition: transform 0.5s ease;
+        }
+
+        .toggle-btn span {
+            background-color: black;
+            height: 3px;
+            width: 100%;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-btn.open span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .toggle-btn.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .toggle-btn.open span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
         }
 
         .content {
@@ -73,8 +118,8 @@
             padding: 20px;
             flex-grow: 1;
             transition: margin-left 0.3s ease;
-            height: 100vh;
-            overflow-y: auto; /* Enable vertical scrolling */
+            height: calc(100vh - 80px);
+            overflow-y: auto;
         }
 
         .content.expanded {
@@ -88,6 +133,7 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             padding: 20px;
             margin-top: 20px;
+            margin-left: 160px;
         }
 
         .card-title {
@@ -95,24 +141,16 @@
             font-weight: 500;
             color: black;
             margin-bottom: 15px;
-            border-bottom: 2px solid #4A90E2;
+            border-bottom: 2px solid green;
             padding-bottom: 10px;
         }
 
-        h1 {
+        .content h1 {
             text-align: center;
-            color: black;
+            color: green;
             margin-bottom: 20px;
-            font-size: 4em !important;
+            font-size: 4em;
             font-weight: 700;
-        }
-
-        .alert {
-            background-color: #d4edda;
-            color: #155724;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
         }
 
         table {
@@ -169,66 +207,65 @@
             background-color: #c82333;
         }
 
-        /* Dashboard navigation styles */
-        .dashboard {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: rgba(255, 255, 255, 0.8);
-            padding: 10px 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 200px;
+            }
 
-        .dashboard div {
-            text-align: center;
-        }
+            .toggle-btn {
+                left: 10px;
+                top: 10px;
+            }
 
-        .dashboard div h3 {
-            margin: 0;
-            font-size: 1.2em;
-            color: #333;
-        }
-
-        .dashboard div p {
-            margin: 0;
-            font-size: 0.9em;
-            color: #777;
-        }
-
-        /* Hamburger icon */
-        .toggle-btn::before {
-            content: "\2630"; /* Unicode for hamburger menu */
-            font-size: 1.5em;
+            .content {
+                margin-left: 0;
+                padding-left: 10px;
+            }
         }
     </style>
     <script>
         function toggleSidebar() {
             const sidebar = document.querySelector('.sidebar');
             const content = document.querySelector('.content');
+            const toggleBtn = document.querySelector('.toggle-btn');
             sidebar.classList.toggle('open');
             content.classList.toggle('expanded');
+            toggleBtn.classList.toggle('open');
+
+            if (sidebar.classList.contains('open')) {
+                toggleBtn.setAttribute('aria-label', 'Close sidebar');
+            } else {
+                toggleBtn.setAttribute('aria-label', 'Open sidebar');
+            }
+        }
+
+        function confirmAction(message) {
+            return confirm(message);
         }
     </script>
 </head>
 
 <body>
-    <button class="toggle-btn" onclick="toggleSidebar()"></button>
-    
+    <button class="toggle-btn" aria-label="Open sidebar" onclick="toggleSidebar()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <div class="navbar">
+        <h1 class="mb-4">Submitted Request Data</h1>
+        <div>
+            <x-app-layout></x-app-layout> <!-- Optional, adjust as needed -->
+        </div>
+    </div>
+
     <div class="sidebar">
-        <h3>Dashboard</h3>
-        <a href="#accepted">Accepted Requests</a>
-        <a href="#rejected">Rejected Requests</a>
-        <a href="#deleted">Deleted Requests</a>
-        <a href="#reports">Reports</a>
-        <a href="#settings">Settings</a>
-        <x-app-layout></x-app-layout>
+        <a href="{{route ('home')}}">Dashboard</a>
+        <a href="{{ route('admin.adminreq') }}">Student Requests</a>
     </div>
 
     <div class="content">
         <div class="container mt-5">
-            <h1 class="mb-4">Submitted Request Data</h1>
 
             @if(session('success'))
             <div class="alert alert-success">
@@ -262,16 +299,27 @@
                             <td>{{ $request->email }}</td>
                             <td>{{ $request->contact }}</td>
                             <td>{{ $request->status ?? 'Pending' }}</td>
+                            
                             <td>
+                                @if($request->status === 'Accepted' || $request->status === 'Rejected')
+                                    <!-- No buttons for Accepted or Rejected statuses -->
+                                    <a href="{{ route('edit-request', $request->id) }}" class="btn">Edit</a>
+                                    <form action="{{ route('delete-request', $request->id) }}" method="POST" style="display:inline;" onsubmit="return confirmAction('Are you sure you want to delete this request?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-reject">Delete</button>
+                                    </form>
+                                @else
                                 <a href="{{ route('edit-request', $request->id) }}" class="btn">Edit</a>
-                                <form action="{{ route('accept-request', $request->id) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    <button type="submit" class="btn btn-accept">Accept</button>
-                                </form>
-                                <form action="{{ route('reject-request', $request->id) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    <button type="submit" class="btn btn-reject">Reject</button>
-                                </form>
+                                    <form action="{{ route('accept-request', $request->id) }}" method="POST" style="display:inline;" onsubmit="return confirmAction('Are you sure you want to accept this request?');">
+                                        @csrf
+                                        <button type="submit" class="btn btn-accept">Accept</button>
+                                    </form>
+                                    <form action="{{ route('reject-request', $request->id) }}" method="POST" style="display:inline;" onsubmit="return confirmAction('Are you sure you want to reject this request?');">
+                                        @csrf
+                                        <button type="submit" class="btn btn-reject">Reject</button>
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                         @endforeach
@@ -279,9 +327,7 @@
                 </div>
             </div>
             @else
-            <div class="alert alert-info">
-                No requests submitted yet.
-            </div>
+            <div class="alert alert-info">No requests found.</div>
             @endif
         </div>
     </div>

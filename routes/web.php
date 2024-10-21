@@ -29,6 +29,11 @@ Route::get('/dashboard', function () {
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/admin/requests', [AdminController::class, 'requests'])->name('admin.adminreq');
+Route::get('/admin/acceptedreq', [AdminController::class, 'acceptedreq'])->name('admin.acceptedreq');
+
+Route::get('/admin/rejecteddreq', [AdminController::class, 'rejectedreq'])->name('admin.rejectedreq');
+Route::get('/export-requests', [AdminController::class, 'exportRequests'])->name('export-requests');
+
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/request/{id}', [AdminController::class, 'viewRequest'])->name('admin.view-request');
     Route::get('/admin/requests/edit/{id}', [AdminController::class, 'edit'])->name('edit-request');

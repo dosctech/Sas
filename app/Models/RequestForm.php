@@ -9,16 +9,26 @@ class RequestForm extends Model
 {
     use HasFactory;
 
-    protected $table = 'requests';
-
+    // Specify the fillable fields
     protected $fillable = [
+        'user_id', // Include user_id in the fillable array
         'user_type',
         'document_type',
-        'name',
+        'first_name',    // Add first_name field
+        'last_name',     // Add last_name field
+        'middle_name',   // Add middle_name field
         'student_number',
         'email',
         'contact',
         'dry_seal',
-        'id',
+        'status',
     ];
+
+    /**
+     * Get the user that owns the request form.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class); // Define the relationship with the User model
+    }
 }

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Student Appointment</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('image/UpangFav.ico') }}">
 
     <!-- Fonts -->
     <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -27,15 +28,16 @@
             position: relative; 
         }
         header {
+            
             display: flex;
             justify-content: space-between; 
             align-items: center; 
             padding: 5px;
-            background-color: white;
+            background-color: #D8D9DA;
             box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
         }
         .btn {
-            background-color: #347928; 
+            background-color: #185519;
             color: white; 
             padding: 6px 12px; 
             margin-left: 10px; 
@@ -96,9 +98,9 @@
 
         .dropbtn {
             padding: 8px 12px;  
-            background-color: white; 
+            background-color: #D8D9DA;
             color: black; 
-            border: 2px solid #347928; 
+            border: none; 
             border-radius: 5px; 
             cursor: pointer; 
             transition: background-color 0.3s; 
@@ -133,7 +135,7 @@
             background-color: #f1f1f1; 
         }
         footer {
-            background-color: #347928;
+            background-color: #185519;
             color: white;
             text-align: center;
             padding: 8px;
@@ -146,14 +148,16 @@
 </head>
 <body class="antialiased">
     <header>
-        <img src="{{ asset('image/UniLogo.png') }}" alt="Small Logo" class="small-logo">
+    <a href="/home">
+                <img src="{{ asset('image/UniLogo.png') }}" alt="Small Logo" class="small-logo">
+            </a>
         <div class="button-container">
             @if (Route::has('login'))
                 @auth
                     <a href="{{ route('request') }}" class="btn">Request</a>
                     
                     <div class="dropdown">
-                        <button class="dropbtn">{{ Auth::user()->name }} <i class="fas fa-chevron-down"></i></button>
+                        <button class="dropbtn">Hi, {{ Auth::user()->name }}! <i class="fas fa-chevron-down"></i></button>
                         <div class="dropdown-content">
                             <a href="{{ url('/profile') }}">Profile</a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

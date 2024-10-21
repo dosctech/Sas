@@ -17,25 +17,22 @@
         </div>
 
         <!-- Password -->
-        <div class="mt-4">
+        <div class="mt-4 relative">
             <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
+            <div class="relative">
+                <x-text-input id="password" class="block mt-1 w-full pr-10" type="password" name="password" required autocomplete="new-password" />
+                <span id="togglePassword" class="absolute inset-y-0 right-3 flex items-center text-blue-600 cursor-pointer" onclick="togglePasswordVisibility('password', 'togglePassword')">Show</span>
+            </div>
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
         <!-- Confirm Password -->
-        <div class="mt-4">
+        <div class="mt-4 relative">
             <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
+            <div class="relative">
+                <x-text-input id="password_confirmation" class="block mt-1 w-full pr-10" type="password" name="password_confirmation" required autocomplete="new-password" />
+                <span id="togglePasswordConfirm" class="absolute inset-y-0 right-3 flex items-center text-blue-600 cursor-pointer" onclick="togglePasswordVisibility('password_confirmation', 'togglePasswordConfirm')">Show</span>
+            </div>
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
@@ -44,9 +41,47 @@
                 {{ __('Already registered?') }}
             </a>
 
-            <x-primary-button class="ml-4">
+            <x-primary-button class="ml-4 custom-register-button">
                 {{ __('Register') }}
             </x-primary-button>
         </div>
     </form>
+
+    <script>
+        function togglePasswordVisibility(inputId, toggleId) {
+            const input = document.getElementById(inputId);
+            const toggleText = document.getElementById(toggleId);
+            const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+            input.setAttribute('type', type);
+            toggleText.textContent = type === 'password' ? 'Show' : 'Hide';
+        }
+    </script>
+
+    <style>
+        .custom-register-button {
+            background-color: #347928; /* Set custom green color */
+            color: white; /* Set text color to white */
+            border: none; /* Remove default border */
+            padding: 0.5rem 1rem; /* Add padding */
+            border-radius: 0.375rem; /* Add rounded corners */
+            transition: background-color 0.3s ease; /* Smooth transition for background color */
+        }
+
+        .custom-register-button:hover {
+            background-color: #2c621f; /* Darker green on hover */
+        }
+
+        .relative {
+            position: relative;
+        }
+
+        .absolute {
+            position: absolute;
+        }
+
+        #togglePassword, #togglePasswordConfirm {
+            right: 0.75rem;
+            top: 0.75rem;
+        }
+    </style>
 </x-guest-layout>

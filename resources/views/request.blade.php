@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document Request Form</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('image/UpangFav.ico') }}">
     <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -17,21 +18,22 @@
         }
         header {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            background-color: white;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 5px;
+            background-color: #D8D9DA;
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
         }
         .btn {
-            background-color: #347928;
-            color: white;
-            padding: 10px 20px;
-            margin: 0 10px;
-            text-decoration: none;
+            background-color: #185519;
+            color: white; 
+            padding: 6px 12px; 
+            margin-left: 10px; 
+            text-decoration: none; 
             border-radius: 5px;
-            display: inline-block;
-            transition: background-color 0.3s;
+            display: inline-block; 
+            font-size: 14px; 
+            transition: background-color 0.3s; 
         }
         .btn:hover {
             background-color: #FEC260;
@@ -105,6 +107,19 @@
             border-color: #8B0000;
             font-weight: bold;
         }
+        .form-row {
+            margin-bottom: 15px; /* Space between rows */
+        }
+
+            .form-row div {
+                flex: 1; /* Make each input take equal space */
+            }
+
+            input[type="text"], input[type="email"], select {
+                width: 100%; /* Full width */
+                padding: 8px; /* Padding inside input */
+                box-sizing: border-box; /* Include padding in width */
+            }
 
         button {
             width: 100%;
@@ -121,22 +136,29 @@
         button:hover {
             background-color: #697565;
         }
+        .required {
+            color: red;
+        }
+        
         footer {
-            background-color: #347928;
+            background-color: #185519;
             color: white;
             text-align: center;
-            padding: 5px 0;
+            padding: 8px;
             position: relative;
             bottom: 0;
             width: 100%;
-            font-size: 12px;
+            font-size: 9px;
         }
+        
     </style>
 </head>
 <body>
     <!-- Header -->
     <header>
-        <img src="{{ asset('image/UniLogo.png') }}" alt="Small Logo" class="small-logo">
+    <a href="/home">
+                <img src="{{ asset('image/UniLogo.png') }}" alt="Small Logo" class="small-logo">
+            </a>
         <div class="button-container">
             @if (Route::has('login'))
                 @auth
@@ -159,71 +181,92 @@
             @csrf
 
             <div class="container">
-                <h2>Request Information</h2>
-                <div class="form-row">
+            <h2>Request Information</h2>
+            <div class="form-row">
+                <div>
+                    <label for="user_type">Person who Claims <span class="required">*</span></label>
+                    <select name="user_type" id="user_type" required>
+                        <option value="" disabled selected>Select Person</option>
+                        <option value="Alumni">Alumni</option>
+                        <option value="Current Student">Current Student</option>
+                        <option value="Parents">Parents</option>
+                        <option value="Guardian">Guardian</option>
+                        <option value="Teacher">Teacher</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="document_type">Document Type <span class="required">*</span></label>
+                    <select name="document_type" id="document_type" required>
+                        <option value="" disabled selected>Select Document Type</option>
+                        <option value="Form137">Form 137</option>
+                        <option value="Form138- Report Card">Form 138 - Report Card</option>
+                        <option value="COM - Certificate of Matriculation">COM - Certificate of Matriculation</option>
+                        <option value="COG - Copy of Grades">COG - Copy of Grades</option>
+                        <option value="TOR - Transcript of Records">TOR - Transcript of Records</option>
+                        <option value="COE - Certificate of Enrollment">COE - Certificate of Enrollment</option>
+                        <option value="Diploma">Diploma</option>
+                        <option value="AcademicRecords">Academic Records</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <h2>User Information</h2>
+            <div class="form-row">
+                <div style="display: flex; gap: 10px;">
                     <div>
-                        <label for="user_type">Person who Claims</label>
-                        <select name="user_type" id="user_type" required>
-                            <option value="" disabled selected>Select People</option>
-                            <option value="Alumni">Alumni</option>
-                            <option value="Current Student">Current Student</option>
-                            <option value="Parents">Parents</option>
-                        </select>
+                        <label for="last_name">Last Name <span class="required">*</span></label>
+                        <input type="text" name="last_name" id="last_name" required>
                     </div>
+
                     <div>
-                        <label for="document_type">Document Type</label>
-                        <select name="document_type" id="document_type" required>
-                            <option value="" disabled selected>Select Document Type</option>
-                            <option value="Form 137">Form 137</option>
-                            <option value="COM">COM</option>
-                            <option value="COG">COG</option>
-                            <option value="TOR">TOR</option>
-                            <option value="COE">COE</option>
-                        </select>
+                        <label for="first_name">First Name <span class="required">*</span></label>
+                        <input type="text" name="first_name" id="first_name" required>
+                    </div>
+
+                    <div>
+                        <label for="middle_name">Middle Name</label>
+                        <input type="text" name="middle_name" id="middle_name">
                     </div>
                 </div>
             </div>
 
-            <div class="container">
-                <h2>User Information</h2>
-                <div class="form-row">
-                    <div>
-                        <label for="name">Student Name</label>
-                        <input type="text" name="name" id="name" required>
-                    </div>
-
-                    <div>
-                        <label for="student_number">Student Number</label>
-<input type="text" name="student_number" id="student_number" required pattern="[0-9\-]*" title="Please enter numbers or - only" oninput="validateInput(this)">
-                        <span id="error-message" style="color: red; display: none;">Letters not allowed</span>
-                    </div>
+            <div class="form-row">
+                <div>
+                    <label for="student_number">Student Number <span class="required">*</span></label>
+                    <input type="text" name="student_number" id="student_number" required pattern="[0-9\-]*" title="Please enter numbers or - only" oninput="validateInput(this)">
+                    <span id="error-message" style="color: red; display: none;">Letters not allowed</span>
                 </div>
-
-                <div class="form-row">
-                    <div>
-                        <label for="email">Email</label>
-                        <input type="email" name="email" id="email" required>
-                    </div>
-
-                    <div>
-                        <label for="contact">Contact</label>
-                        <input type="text" name="contact" id="contact" required pattern="[03-2223-000715]*" title="Please enter numbers, 0 or - only">
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div>
-                        <label for="dry_seal">Dry Seal</label>
-                        <select name="dry_seal" id="dry_seal" required>
-                            <option value="" disabled selected>Select Dry Seal Option</option>
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div>
-                </div>
-
-                <button type="submit">Submit</button>
             </div>
+
+            <div class="form-row">
+                <div>
+                    <label for="email">Email <span class="required">*</span></label>
+                    <input type="email" name="email" id="email" required>
+                </div>
+
+                <div>
+                    <label for="contact">Contact <span class="required">*</span></label>
+                    <input type="text" name="contact" id="contact" required pattern="[0-9\-]*" title="Please enter numbers or - only">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div>
+                    <label for="dry_seal">Dry Seal <span class="required">*</span></label>
+                    <select name="dry_seal" id="dry_seal" required>
+                        <option value="" disabled selected>Select Dry Seal Option</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+            </div>
+        
+    <button type="submit">Submit</button>
+</div>
+
         </form>
     </div>
 

@@ -17,7 +17,9 @@ class RequestData extends Model
         'user_type',
         'document_type',
         'dry_seal',
-        'name',
+        'last_name',    // Added last name
+        'first_name',   // Added first name
+        'middle_name',  // Added middle name
         'student_number',
         'email',
         'contact',

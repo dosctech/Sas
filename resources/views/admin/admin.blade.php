@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Page</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('image/UpangFav.ico') }}">
+
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -23,7 +25,7 @@
             display: flex;
             justify-content: center; /* Center the content */
             align-items: center;
-            background-color: green;
+            background-color: #185519;
             color: white;
             padding: 15px 30px;
             position: relative;
@@ -33,15 +35,14 @@
 
         .navbar h1 {
             margin: 0;
-            font-size: 56px; /* Increased font size */
+            font-size: 50px; /* Increased font size */
             text-align: center; /* Center the text */
             margin-left: 150px;
             flex: 1; /* Allow the title to take available space */
         }
 
-
         .navbar a {
-            color: white;
+            color: black;
             text-decoration: none;
             padding: 10px 15px;
             border-radius: 5px;
@@ -55,7 +56,7 @@
         .sidebar {
             width: 250px;
             height: 100vh;
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: #185519;
             position: fixed;
             left: -250px;
             transition: left 0.3s ease;
@@ -75,16 +76,16 @@
 
         .sidebar a {
             display: block;
-            color: #000;
+            color:#ddd;
             text-decoration: none;
             padding: 10px;
-            margin: 10px 0;
+            margin: 30px 10px;
             border-radius: 5px;
             transition: background-color 0.3s;
         }
 
         .sidebar a:hover {
-            background-color: #efefef;
+            background-color: black;
         }
 
         .toggle-btn {
@@ -139,50 +140,140 @@
             margin-left: 250px;
         }
 
+        /* Dashboard Styling */
+    .dashboard {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        align-items: center;
+    }
+
+    .dashboard-item {
+        flex: 1;
+        text-align: center;
+        padding: 10px;
+        background-color: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        margin: 0 10px;
+    }
+
+    .dashboard-item h3 {
+        font-size: 18px;
+        font-weight: bold;
+        color: #2d3748;
+        margin-bottom: 10px;
+    }
+
+    .dashboard-item p {
+        font-size: 20px;
+        color: #333;
+    }
+
+    /* Align the card section to be consistent with dashboard */
+    .card {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+    }
+
+    .card-column {
+        flex: 1;
+        padding: 10px;
+        background-color: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+    }
+
+    /* Responsive design for smaller screens */
+    @media (max-width: 768px) {
         .dashboard {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+            flex-direction: column;
+        }
+
+        .dashboard-item {
             margin-bottom: 20px;
         }
 
-        .dashboard div {
-            background-color: rgba(255, 255, 255, 0.8);
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            text-align: center;
+        .card {
+            flex-direction: column;
         }
 
-        .dashboard div h3 {
-            margin: 0;
-            font-size: 1.2em;
-            color: #333;
+        .card-column {
+            margin-bottom: 20px;
         }
-
-        .dashboard div p {
-            margin: 0;
-            font-size: 1.5em;
-            font-weight: bold;
-        }
+    }
 
         .card {
-            background-color: rgba(255, 255, 255, 0.9);
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+    }
+
+    .card-column {
+        flex: 1;
+        padding: 10px;
+        background-color: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+    }
+
+    .card-title {
+        font-size: 18px;
+        font-weight: bold;
+        color: #2d3748;
+        margin-bottom: 10px;
+        text-align: center;
+        border-bottom: 2px solid #28a745;
+        padding-bottom: 10px;
+    }
+
+    .card-column ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .card-column li {
+        padding: 5px 0;
+        font-size: 16px;
+        color: #333;
+    }
+
+    /* Status Colors */
+    .status-pending {
+        color: #000; /* Black for pending */
+    }
+
+    .status-accepted {
+        color: #28a745; /* Green for accepted */
+    }
+
+    .status-rejected {
+        color: #ff4d4d; /* Red for rejected */
+    }
+
+    /* Responsive design for smaller screens */
+    @media (max-width: 768px) {
+        .card {
+            flex-direction: column;
         }
 
-        .card-title {
-            font-size: 1.5em;
-            font-weight: 500;
-            color: black;
-            margin-bottom: 15px;
-            border-bottom: 2px solid green;
-            padding-bottom: 10px;
+        .card-column {
+            margin-bottom: 20px;
         }
+    }
 
         .content h1 {
             text-align: center;
@@ -207,11 +298,12 @@
                 padding-left: 10px;
             }
         }
+
         .notification {
             position: relative;
             display: inline-block;
             margin-left: auto;
-            margin-right: 40px;
+            margin-right: 30px;
             cursor: pointer; /* Make it clear that the icon is clickable */
         }
 
@@ -231,7 +323,6 @@
         }
 
         .dropdown {
-            margin-left:-350px;
             display: none;
             position: absolute;
             background-color: white;
@@ -243,6 +334,7 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
             z-index: 1;
             padding: 10px; /* Added padding for better spacing */
+            right: 0; /* Align dropdown to the right */
         }
 
         .dropdown-content {
@@ -252,7 +344,7 @@
         }
 
         .dropdown-content p {
-            color:#000;
+            color: #000;
             margin: 0;
             cursor: pointer;
             padding: 5px 0; /* Adds some padding for a better clickable area */
@@ -261,6 +353,56 @@
         .dropdown-content p:hover {
             background-color: #f1f1f1; /* Highlight effect on hover */
         }
+        .pagination-wrapper .pagination {
+            display: inline-block;
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .pagination-wrapper .pagination li {
+            display: inline;
+            margin: 0 5px;
+        }
+
+        .pagination-wrapper .pagination li a {
+            color: #3490dc;
+            padding: 5px 10px;
+            text-decoration: none;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .pagination-wrapper .pagination li.active span {
+            background-color: #3490dc;
+            color: white;
+            border-color: #3490dc;
+        }
+        .search-form1 {
+            display: flex;
+            justify-content: flex-end; /* Align items to the right */
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .search-form1 input {
+            width: 200px;
+            padding: 5px 15px;
+            border: 2px solid #ccc;
+            border-radius: 25px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-right: 15px;
+            color: #000;
+        }
+
+        .search-form1 input:focus {
+            border-color: #185519;
+            outline: none;
+            box-shadow: 0 2px 5px rgba(24, 85, 25, 0.4); /* Green shadow when focused */
+        }
+
+        
     </style>
     <script>
         function toggleSidebar() {
@@ -288,87 +430,128 @@
     </button>
 
     <div class="navbar">
-        <h1>Admin Dashboard</h1>
         
+        <h1>Admin Dashboard</h1>
+
         <div class="notification" onclick="toggleDropdown()">
             <span class="notification-icon">&#128276;</span>
             <span class="notification-badge" id="notificationBadge"></span>
             <div class="dropdown" id="notificationDropdown">
                 <div class="dropdown-content">
                     @foreach($formData as $request)
-                    @if($request->recentRequest)
+                        @if($request->recentRequest)
+                            <!-- Do nothing if there's a recent request flag -->
                         @else
-                            <p onclick="handleDropdownClick('Student: {{ $request->name }}, Number: {{ $request->student_number }} - 🕒New Request.')">
-                            🕒 <b>New Request</b> <br> <b>{{ $request->user_type}} - {{ $request->name }} ({{ $request->student_number }})</b> -
-                            <br>Please visit the Registrar at the University of Pangasinan for further information. <br> <b>{{ $request->status }}</b>
+                            <p onclick="handleDropdownClick('Student: {{ $request->name }}, Number: {{ $request->student_number }}')">
+                                @if($request->status == 'Accepted')
+                                    🎉 <b>Accepted Request - <br> Requesting For {{ $request->document_type}}</b> <br> 
+                                    <b>I'm a {{ $request->user_type}} - {{ $request->last_name }}, {{ $request->first_name }} {{ $request->middle_name }} ({{ $request->student_number }})</b> -
+                                    <br>Your request has been accepted! <br> <b>Status: {{ $request->status }}</b>
+                                @elseif($request->status == 'Rejected')
+                                    ❌ <b>Rejected Request - <br> Requesting For {{ $request->document_type}}</b> <br> 
+                                    <b>I'm a {{ $request->user_type}} - {{ $request->last_name }}, {{ $request->first_name }} {{ $request->middle_name }} ({{ $request->student_number }})</b> -
+                                    <br>Your request has been rejected. Please contact the Registrar for further assistance. <br> <b>Status: {{ $request->status }}</b>
+                                @else
+                                    🕒 <b>New Request - <br> Requesting For {{ $request->document_type}}</b> <br> 
+                                    <b>I'm a {{ $request->user_type}} - {{ $request->last_name }}, {{ $request->first_name }} {{ $request->middle_name }} ({{ $request->student_number }})</b> -
+                                    <br>Please visit the Registrar at the University of Pangasinan for further information. <br> <b>Status: {{ $request->status }}</b>
+                                @endif
                             </p>
                         @endif
                     @endforeach
                 </div>
             </div>
         </div>
+
+
+        
         <div>
             <x-app-layout></x-app-layout> <!-- Optional, adjust as needed -->
         </div>
     </div>
 
     <div class="sidebar">
-    <a href="{{route ('home')}}">Dashboard</a>
+    <img src="{{ asset('image/UniLogo.png') }}" alt="Small Logo" class="small-logo">
+
+        <a href="{{route ('home')}}">Dashboard</a>
         <!-- Use route helper for the admin requests page -->
         <a href="{{ route('admin.adminreq') }}">Student Requests</a>
-        
+        <a href="{{ route('admin.acceptedreq') }}">Accepted Requests</a>
+        <a href="{{ route('admin.rejectedreq') }}">Rejected Requests</a>
     </div>
 
 
     <div class="content">
+    <form action="{{ route('home') }}" method="GET" class="search-form1">
+    <input type="text" id="search-input" name="query" placeholder="Search requests..." value="{{ request()->input('query') }}" oninput="searchRequests()">
+</form>
         <div class="dashboard">
-            <div>
+            <div class="dashboard-item">
                 <h3>Total Requests</h3>
                 <p>{{ $totalRequests }}</p>
             </div>
-            <div>
+            <div class="dashboard-item">
                 <h3>Accepted</h3>
-                <p>{{ $acceptedRequests }}</p>
+                <p>{{ $acceptedRequestsCount }}</p>
             </div>
-            <div>
+            <div class="dashboard-item">
                 <h3>Rejected</h3>
-                <p>{{ $rejectedRequests }}</p>
+                <p>{{ $rejectedRequestsCount }}</p>
             </div>
-        </div>
+    </div>
 
         <!-- Student Requests Section -->
         <div class="card">
-                <div class="card-title">Recent Requests</div>
-                <ul>
-                    @foreach ($recentRequests as $request)
-                        @if ($request->status === 'pending') <!-- Assuming 'Pending' is the status for recent requests -->
-                            <li>{{ $request->name }} - {{ $request->status }}</li>
-                        @endif
-                    @endforeach
-                </ul>
+                <div class="card-column">
+                    <div class="card-title">Recent Requests</div>
+                    <ul>
+                        @foreach ($paginatedRecentRequests as $request)
+                            @if ($request->status === 'Pending')
+                                <li>{{ $request->last_name }}, {{ $request->first_name }} -{{ $request->user_type}}- {{ $request->middle_name }} - 
+                                    <b class="status-pending">{{ $request->status }}</b>
+                                </li>
+                            @endif
+                        @endforeach
+                    </ul>   
+                    <div class="pagination-wrapper"> 
+                    {{ $paginatedRecentRequests->appends(['rejected_page' => request()->get('rejected_page'), 'accepted_page' => request()->get('accepted_page')])->links() }}
+                    </div>
+                </div>
+                <div class="card-column">
+                    <div class="card-title">Accepted Requests</div>
+                    <ul>
+                        @foreach ( $paginatedAcceptedRequests as $request)
+                            @if ($request->status === 'Accepted')
+                                <li>{{ $request->last_name }}, {{ $request->first_name }} -{{ $request->user_type}}- {{ $request->middle_name }} - 
+                                    <b class="status-accepted">{{ $request->status }}</b>
+                                </li>
+                            @endif
+                        @endforeach
+                    </ul>
+                    <div class="pagination-wrapper"> 
+                    {{ $paginatedAcceptedRequests->appends(['rejected_page' => request()->get('rejected_page'), 'recent_page' => request()->get('recent_page')])->links() }}
+                    </div>
+                </div>
+
+                <div class="card-column">
+                    <div class="card-title">Rejected Requests</div>
+                    <ul>
+                        @foreach ($paginatedRejectedRequests as $request)
+                            @if ($request->status === 'Rejected')
+                                <li>{{ $request->last_name }}, {{ $request->first_name }} -{{ $request->user_type}}- {{ $request->middle_name }} - 
+                                    <b class="status-rejected">{{ $request->status }}</b>
+                                </li>
+                            @endif
+                        @endforeach
+                    </ul>
+                    <div class="pagination-wrapper"> 
+                    {{ $paginatedRejectedRequests->appends(['accepted_page' => request()->get('accepted_page'), 'recent_page' => request()->get('recent_page')])->links() }}
+                    </div>
+                </div>
             </div>
 
-            <div class="card" id="accepted">
-                <div class="card-title">Accepted Requests</div>
-                <ul>
-                    @foreach ($recentRequests as $request)
-                        @if ($request->status === 'Accepted') <!-- Filter accepted requests -->
-                            <li>{{ $request->name }} - {{ $request->status }}</li>
-                        @endif
-                    @endforeach
-                </ul>
-            </div>
 
-            <div class="card" id="rejected">
-                <div class="card-title">Rejected Requests</div>
-                <ul>
-                    @foreach ($recentRequests as $request)
-                        @if ($request->status === 'Rejected') <!-- Filter rejected requests -->
-                            <li>{{ $request->name }} - {{ $request->status }}</li>
-                        @endif
-                    @endforeach
-                </ul>
-            </div>
+            
 
 
     </div>
@@ -406,6 +589,42 @@
             alert(message); // You can change this to any action you want to perform
         }
     </script>
+    <script>
+    let debounceTimer;
+
+    function searchRequests() {
+        const input = document.getElementById('search-input');
+        const query = input.value;
+
+        // Only redirect if there's a query or if the input is cleared
+        const url = new URL("{{ route('admin.adminreq') }}");
+
+        // Update query parameter
+        if (query) {
+            url.searchParams.set('query', query);
+        } else {
+            url.searchParams.delete('query'); // Remove the query parameter if the input is empty
+        }
+
+        // Redirect to the updated URL
+        window.location.href = url.toString();
+    }
+
+    function handleInput() {
+        clearTimeout(debounceTimer); // Clear the previous timer
+        debounceTimer = setTimeout(() => {
+            // Delay for 300 milliseconds before calling searchRequests
+            searchRequests();
+        }, 200); // Adjust this delay as needed
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const inputField = document.getElementById('search-input');
+
+        // Add event listener for input changes
+        inputField.addEventListener('input', handleInput);
+    });
+</script>
 </body>
 
 </html>

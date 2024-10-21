@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -18,10 +17,10 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        
         'name',
         'email',
         'password',
+        // Add any additional fields as necessary, such as 'role' or 'status'
     ];
 
     /**
@@ -42,4 +41,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the request forms for the user.
+     */
+    public function requestForms()
+    {
+        return $this->hasMany(RequestForm::class); // Define the relationship with RequestForm
+    }
 }

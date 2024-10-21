@@ -4,12 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Submitted Request Data</title>
+    <title>Accepted Page</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('image/UpangFav.ico') }}">
 
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* Add your existing styles here */
         body {
             font-family: 'Roboto', sans-serif;
             background-size: cover;
@@ -21,7 +20,6 @@
             overflow: hidden;
             flex-direction: column;
             overflow-y: auto;
-            
         }
 
         .navbar {
@@ -38,10 +36,23 @@
 
         .navbar h1 {
             margin: 0;
-            font-size: 56px;    
-            text-align: center;
-            margin-left: 150px;
-            flex: 1;
+            font-size: 56px; /* Increased font size */
+            text-align: center; /* Center the text */
+            margin-left: 250px;
+            flex: 1; /* Allow the title to take available space */
+        }
+
+
+        .navbar a {
+            color: black;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .navbar a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
         }
 
         .sidebar {
@@ -131,137 +142,62 @@
             margin-left: 250px;
         }
 
-        .card {
-            
-            background-color: #ffffff; 
-            border-radius: 10px; 
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
-            margin: 20px; 
-            padding: 20px; 
-            width: 1400px;
-            transition: transform 0.2s; 
-        }
-        
         .dashboard {
             display: grid;
             gap: 20px;
             margin-bottom: 20px;
         }
-        
-        .content h1 {
+
+        .dashboard div {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             text-align: center;
-            color: green;
-            margin-bottom: 20px;
-            font-size: 4em;
-            font-weight: 700;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-            
         }
 
-        th,
-        td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            text-align: left;
-            
-        }
-
-        th {
-            background-color: #347928;
-            color: white;
-            text-transform: uppercase;
-            font-weight: bold;
-        }
-
-        td {
+        .dashboard div h3 {
+            margin: 0;
+            font-size: 1.2em;
             color: #333;
         }
 
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #ff9800;
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-            font-weight: 500;
+        .dashboard div p {
+            margin: 0;
+            font-size: 1.5em;
+            font-weight: bold;
         }
 
-        .btn:hover {
-            background-color: #e68a00;
-        }
-
-        .btn-accept {
-            background-color: #28a745;
-        }
-
-        .btn-accept:hover {
-            background-color: #218838;
-        }
-
-        .btn-reject {
-            background-color: #dc3545;
-        }
-
-        .btn-reject:hover {
-            background-color: #c82333;
-        }
-        .btn-export {
-            background-color: white; /* Green background */
-            color: black; /* White text */
-            padding: 10px 20px; /* Padding for spacing */
-            font-size: 16px; /* Font size */
-            border: none; /* Remove border */
-            border-radius: 5px; /* Rounded corners */
-            text-decoration: none; /* Remove underline */
-            display: inline-block; /* Display inline for a button-like effect */
-            cursor: pointer; /* Change cursor on hover */
-            transition: background-color 0.3s ease; /* Smooth hover effect */
-        }
-
-        .btn-export:hover {
-            background-color: #45a049; /* Darker green on hover */
-        }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 200px;
+        .card {
+            
+                background-color: #ffffff; 
+                border-radius: 10px; 
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+                margin: 20px; 
+                padding: 20px; 
+                width: 100%;
+                transition: transform 0.2s; 
             }
 
-            .toggle-btn {
-                left: 10px;
-                top: 10px;
+            /* Card Title */
+            
+            .card-header {
+                display: flex;
+                justify-content: space-between; /* Positions title and search input on opposite sides */
+                align-items: center; /* Vertically center the items */
+                padding: 10px; /* Adjust padding as needed */
             }
 
-            .content {
-                margin-left: 0;
-                padding-left: 10px;
+            .card-title {
+                font-size: 2em; /* Larger font size for title */
+                font-weight: bold; /* Bold text */
+                color: #333; /* Darker text color */
+                margin: 0; /* Remove default margin */
+                border-bottom: 5px solid green; /* Blue underline */
+                padding-bottom: 5px; /* Space below the border */
             }
-        }
-        .card-header {
-            display: flex;
-            justify-content: space-between; /* Positions title and search input on opposite sides */
-            align-items: center; /* Vertically center the items */
-            padding: 10px; /* Adjust padding as needed */
-        }
 
-        .card-title {
-            font-size: 2em; /* Larger font size for title */
-            font-weight: bold; /* Bold text */
-            color: #333; /* Darker text color */
-            margin: 0; /* Remove default margin */
-            border-bottom: 5px solid green; /* Blue underline */
-            padding-bottom: 5px; /* Space below the border */
-        }
-
-        /* Update the search form for the new layout */
-        .search-form {
+            .search-form {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -292,6 +228,55 @@
                 width: 100%;
             }
         }
+
+            /* List Style */
+            .card ul {
+                list-style: none; /* Remove default list styles */
+                padding: 0; /* Remove default padding */
+            }
+
+            /* List Item */
+            .card ul li {
+                background-color: #f8f9fa; /* Light grey background for list items */
+                border-radius: 5px; /* Rounded corners for list items */
+                padding: 10px; /* Padding for list items */
+                margin: 5px 0; /* Spacing between list items */
+                transition: background-color 0.3s; /* Smooth background transition */
+            }
+
+            /* List Item Hover Effect */
+            .card ul li:hover {
+                background-color: #e2e6ea; /* Darker grey on hover */
+            }
+
+            /* Responsive Design */
+            @media (max-width: 600px) {
+                .card {
+                    max-width: 100%; /* Full width on small screens */
+                    margin: 10px; /* Reduced margin */
+                }
+
+                .card-title {
+                    font-size: 1.25em; /* Smaller font size for title */
+                }
+            }
+
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 200px;
+            }
+
+            .toggle-btn {
+                left: 10px;
+                top: 10px;
+            }
+
+            .content {
+                margin-left: 0;
+                padding-left: 10px;
+            }
+        }
         .notification {
             position: relative;
             display: inline-block;
@@ -316,6 +301,7 @@
         }
 
         .dropdown {
+            margin-left:-350px;
             display: none;
             position: absolute;
             background-color: white;
@@ -327,7 +313,6 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
             z-index: 1;
             padding: 10px; /* Added padding for better spacing */
-            right: 0; /* Align dropdown to the right */
         }
 
         .dropdown-content {
@@ -337,7 +322,7 @@
         }
 
         .dropdown-content p {
-            color: #000;
+            color:#000;
             margin: 0;
             cursor: pointer;
             padding: 5px 0; /* Adds some padding for a better clickable area */
@@ -346,31 +331,91 @@
         .dropdown-content p:hover {
             background-color: #f1f1f1; /* Highlight effect on hover */
         }
-        .search-form1 {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 10px 0;
-        }
 
-        .search-form1 input {
-            width: 200px;
-            padding: 5px 15px;
-            border: 2px solid #ccc;
-            border-radius: 25px;
-            font-size: 16px;
-            transition: border-color 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            margin-right: 15px;
-            color: #000;
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .search-form input {
+                width: 100%;
+            }
         }
+        table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    font-family: 'Arial', sans-serif;
+    text-align: left;
+}
 
-        .search-form1 input:focus {
-            border-color: #185519;
-            outline: none;
-            box-shadow: 0 2px 5px rgba(24, 85, 25, 0.4); /* Green shadow when focused */
-        }
-        
+thead tr {
+    background-color: #347928;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    justify-content: center;
+}
+
+thead th {
+    padding: 12px 15px;
+    border-bottom: 2px solid #ddd;
+    
+}
+
+tbody tr {
+    border-bottom: 1px solid #ddd;
+}
+
+tbody td {
+    padding: 12px 15px;
+}
+
+tbody tr:nth-of-type(even) {
+    background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+tbody td b {
+    color: green; /* Status text color */
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+@media (max-width: 768px) {
+    table {
+        font-size: 14px;
+    }
+    thead {
+        display: none; /* Hide the header in small screens */
+    }
+    tbody tr {
+        display: block;
+        margin-bottom: 10px;
+    }
+    tbody td {
+        display: block;
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+        border: none;
+        border-bottom: 1px solid #ddd;
+    }
+    tbody td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 50%;
+        padding-left: 15px;
+        font-weight: bold;
+        text-align: left;
+    }
+}
+
         
     </style>
     <script>
@@ -388,10 +433,6 @@
                 toggleBtn.setAttribute('aria-label', 'Open sidebar');
             }
         }
-
-        function confirmAction(message) {
-            return confirm(message);
-        }
     </script>
 </head>
 
@@ -403,9 +444,9 @@
     </button>
 
     <div class="navbar">
-    <h1 class="mb-4">Admin Dashboard</h1>
-
-    <div class="notification" onclick="toggleDropdown()">
+        <h1>Admin Dashboard</h1>
+        
+        <div class="notification" onclick="toggleDropdown()">
             <span class="notification-icon">&#128276;</span>
             <span class="notification-badge" id="notificationBadge"></span>
             <div class="dropdown" id="notificationDropdown">
@@ -414,7 +455,7 @@
                     @if($request->recentRequest)
                         @else
                             <p onclick="handleDropdownClick('Student: {{ $request->name }}, Number: {{ $request->student_number }} - 🕒New Request.')">
-                            🕒 <b>New Request - <br> Requesting For {{ $request->document_type}}</b> <br> <b>I'm a {{ $request->user_type}} - {{ $request->last_name }}, {{ $request->first_name }} {{ $request->middle_name }} ({{ $request->student_number }})</b> -
+                            🕒 <b>New Request - <br> Requesting For {{ $request->document_type}}</b> <br> <b>I'm a {{ $request->user_type}} -  {{ $request->last_name }}, {{ $request->first_name }} {{ $request->middle_name }} ({{ $request->student_number }})</b> -
                             <br>Please visit the Registrar at the University of Pangasinan for further information. <br> <b>{{ $request->status }}</b>
                             </p>
                         @endif
@@ -422,129 +463,69 @@
                 </div>
             </div>
         </div>
-    
+        
         <div>
             <x-app-layout></x-app-layout> <!-- Optional, adjust as needed -->
         </div>
     </div>
 
     <div class="sidebar">
-        <a href="{{route ('home')}}">Dashboard</a>
+    <a href="{{route ('home')}}">Dashboard</a>
+        <!-- Use route helper for the admin requests page -->
         <a href="{{ route('admin.adminreq') }}">Student Requests</a>
         <a href="{{ route('admin.acceptedreq') }}">Accepted Requests</a>
         <a href="{{ route('admin.rejectedreq') }}">Rejected Requests</a>
     </div>
 
+
     <div class="content">
-        <div class="container mt-5">
-
-            @if(session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
+    <div class="dashboard">
+        <div class="card" id="accepted">
+            <div class="card-header">
+                <h5 class="card-title">Accepted Request</h5>
+                <form action="{{ route('admin.acceptedreq') }}" method="GET" class="search-form">
+                <input type="text" id="search-input" name="query" placeholder="Search..." value="{{ request()->input('query') }}" oninput="searchRequests()">
+                </form>
             </div>
-            @endif
-
-            @if($formData->count())
-            <div class="card">
-    <div class="card-header">
-        <h5 class="card-title">Request Details</h5>
-        <!-- Move the form inside the header to the right -->
-        <form action="{{ route('admin.adminreq') }}" method="GET" class="search-form">
-    <input type="text" id="search-input" name="query" placeholder="Search requests..." value="{{ request()->input('query') }}" oninput="searchRequests()">
-</form>
-    </div>
-    <div id="results">
-    <table>
-        <thead>
-            <tr>
-                <th>Person Who claim</th>
-                <th>Document Type</th>
-                <th>Dry Seal</th>
-                <th>Full Name</th>
-                <th>Student Number</th>
-                <th>Email</th>
-                <th>Contact</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($formData as $request)
-            <tr>
-                <td>{{ $request->user_type }}</td>
-                <td>{{ $request->document_type }}</td>
-                <td>{{ $request->dry_seal }}</td>
-                <td>{{ $request->last_name }}, {{ $request->first_name }} - {{ $request->middle_name }}</td>
-                <td>{{ $request->student_number }}</td>
-                <td>{{ $request->email }}</td>
-                <td>{{ $request->contact }}</td>
-                <td>{{ $request->status ?? 'Pending' }}</td>
-                <td>
-                    @if($request->status === 'Accepted' || $request->status === 'Rejected')
-                        <a href="{{ route('edit-request', $request->id) }}" class="btn">Edit</a>
-                        <form action="{{ route('delete-request', $request->id) }}" method="POST" style="display:inline;" onsubmit="return confirmAction('Are you sure you want to delete this request?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-reject">Delete</button>
-                        </form>
-                    @else
-                        <a href="{{ route('edit-request', $request->id) }}" class="btn">Edit</a>
-                        <form action="{{ route('accept-request', $request->id) }}" method="POST" style="display:inline;" onsubmit="return confirmAction('Are you sure you want to accept this request?');">
-                            @csrf
-                            <button type="submit" class="btn btn-accept">Accept</button>
-                        </form>
-                        <form action="{{ route('reject-request', $request->id) }}" method="POST" style="display:inline;" onsubmit="return confirmAction('Are you sure you want to reject this request?');">
-                            @csrf
-                            <button type="submit" class="btn btn-reject">Reject</button>
-                        </form>
-                    @endif
-                </td>
-            </tr>
-            @endforeach
             
-        </tbody>
-    </table>
-    <div class="pagination-wrapper" style="padding: 10px;">
-    {{ $formData->appends(['query' => request()->query('query')])->links() }}
-</div>
-    <a href="{{ route('export-requests') }}" class="btn btn-export">Export Data</a>
-</div>
-
+            <!-- List of Accepted Requests -->
+            <div class="request-list">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Person Who Claim</th>
+                            <th>Document type</th>
+                            <th>Dry Seal</th>
+                            <th>Full Name</th>
+                            <th>Student Number</th>
+                            <th>Email</th>
+                            <th>Contact</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($formData as $request)
+                        <tr>
+                            <td>{{ $request->user_type }}</td>
+                            <td>{{ $request->document_type }}</td>
+                            <td>{{ $request->dry_seal }}</td>
+                            <td>{{ $request->last_name }}, {{ $request->first_name }} {{ $request->middle_name }}</td>
+                            <td>{{ $request->student_number}}</td>
+                            <td>{{ $request->email }}</td>
+                            <td>{{ $request->contact }}</td>
+                            <td><b>{{ $request->status }} ✔️</b></td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
-            @else
-            
-            <div class="card">
-    <div class="card-header">
-        <h5 class="card-title">Request Details</h5>
-        <!-- Move the form inside the header to the right -->
-        <form action="{{ route('admin.adminreq') }}" method="GET" class="search-form">
-    <input type="text" id="search-input" name="query" placeholder="Search requests..." value="{{ request()->input('query') }}" oninput="searchRequests()">
-</form>
-    </div>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Person Who Claim</th>
-                    <th>Document type</th>
-                    <th>Dry Seal</th>
-                    <th>Full Name</th>
-                    <th>Student Number</th>
-                    <th>Email</th>
-                    <th>Contact</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <!-- Table body content here -->
-        </table>
-        <div class="alert alert-info">NO RESULT FOUND, PERO IINOM TAYO SA BAHAY MAMAYA </div>
-    </div>
-</div>
-
-            @endif
-            
         </div>
     </div>
+    {{ $formData->appends(request()->input())->links() }}
+</div>  
+
+
     <script>
         // Function to toggle the dropdown visibility
         function toggleDropdown() {
@@ -605,7 +586,7 @@
         debounceTimer = setTimeout(() => {
             // Delay for 300 milliseconds before calling searchRequests
             searchRequests();
-        }, 200); // Adjust this delay as needed
+        }, 300); // Adjust this delay as needed
     }
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -616,7 +597,6 @@
     });
 </script>
 
-    
 </body>
 
 </html>

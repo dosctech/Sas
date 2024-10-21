@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\RequestForm;
+use Illuminate\Support\Facades\Auth; // Import Auth facade
 
 class RequestController extends Controller
 {
@@ -20,24 +21,33 @@ class RequestController extends Controller
         $request->validate([
             'user_type' => 'required',
             'document_type' => 'required',
-            'name' => 'required|string|max:255',
-            'student_number' => 'required|regex:/^[0-9-]+$/', // Updated regex to allow hyphens
+            'first_name' => 'required|string|max:255',  // Validate first name
+            'last_name' => 'required|string|max:255',   // Validate last name
+            'middle_name' => 'nullable|string|max:255', // Validate middle name (optional)
+            // Allow numbers and hyphens in student_number
+            'student_number' => 'required|regex:/^[0-9\-]+$/',
             'email' => 'required|email',
-            'contact' => 'required|regex:/^[0-9-]+$/', // Assuming you want to allow hyphens in contact too
+            // Allow numbers and hyphens in contact
+            'contact' => 'required|regex:/^[0-9\-]+$/',
             'dry_seal' => 'required|in:yes,no'
         ]);
         
-        // Store the data in the database with the user ID
-        $requestData = RequestForm::create($request->only([
-            'user_type', 
-            'document_type', 
-            'name', 
-            'student_number', 
-            'email', 
-            'contact', 
-            'dry_seal'
-        ]) + ['id' => auth()->id()]); // Add user ID
-
+        // Store the data in the database and get the created request
+        $requestData = RequestForm::create(array_merge(
+            $request->only([
+                'user_type', 
+                'document_type', 
+                'first_name',     // Store first name
+                'last_name',      // Store last name
+                'middle_name',    // Store middle name
+                'student_number', 
+                'email', 
+                'contact', 
+                'dry_seal'
+            ]),
+            ['user_id' => Auth::id()] // Assign the authenticated user's ID
+        ));
+        
         // Redirect to the read page with a success message
         return redirect()->route('read')->with('success', 'Request submitted successfully!');
     }
@@ -45,8 +55,8 @@ class RequestController extends Controller
     // Display all submitted request data for the authenticated user
     public function read()
     {
-        // Retrieve all form data for the authenticated user
-        $formData = RequestForm::where('id', auth()->id())->get();
+        // Retrieve form data belonging to the authenticated user
+        $formData = RequestForm::where('user_id', Auth::id())->get(); // Only fetch requests by the authenticated user
 
         // Calculate the counts for accepted and rejected requests
         $acceptedCount = $formData->where('status', 'Accepted')->count();
@@ -59,8 +69,11 @@ class RequestController extends Controller
     // Method to accept a request
     public function accept($id)
     {
-        // Find the request by ID and ensure it belongs to the authenticated user
-        $requestForm = RequestForm::where('id', $id)->where('id', auth()->id())->firstOrFail();
+        // Find the request by ID
+        $requestForm = RequestForm::findOrFail($id);
+
+        // Ensure the request belongs to the authenticated user
+        
 
         // Update the status of the request to 'accepted'
         $requestForm->status = 'Accepted';
@@ -73,8 +86,11 @@ class RequestController extends Controller
     // Method to reject a request
     public function reject($id)
     {
-        // Find the request by ID and ensure it belongs to the authenticated user
-        $requestForm = RequestForm::where('id', $id)->where('id', auth()->id())->firstOrFail();
+        // Find the request by ID
+        $requestForm = RequestForm::findOrFail($id);
+
+        // Ensure the request belongs to the authenticated user
+       
 
         // Update the status of the request to 'rejected'
         $requestForm->status = 'Rejected';

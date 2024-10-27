@@ -37,7 +37,7 @@
             margin: 0;
             font-size: 50px; /* Increased font size */
             text-align: center; /* Center the text */
-            margin-left: 150px;
+            margin-left: 450px;
             flex: 1; /* Allow the title to take available space */
         }
 
@@ -79,7 +79,7 @@
             color:#ddd;
             text-decoration: none;
             padding: 10px;
-            margin: 30px 10px;
+            margin: 20px 10px;
             border-radius: 5px;
             transition: background-color 0.3s;
         }
@@ -377,15 +377,16 @@
             color: white;
             border-color: #3490dc;
         }
-        .search-form1 {
+        .search-bar {
             display: flex;
-            justify-content: flex-end; /* Align items to the right */
+            justify-content: flex-end; /* Aligns the search bar to the right */
             align-items: center;
             margin: 10px 0;
+            color: #000;
         }
 
-        .search-form1 input {
-            width: 200px;
+        .search-bar input {
+            width: 270px;
             padding: 5px 15px;
             border: 2px solid #ccc;
             border-radius: 25px;
@@ -394,32 +395,58 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             margin-right: 15px;
             color: #000;
+            opacity: 0.9;
         }
 
-        .search-form1 input:focus {
+        .search-barinput:focus {
             border-color: #185519;
             outline: none;
             box-shadow: 0 2px 5px rgba(24, 85, 25, 0.4); /* Green shadow when focused */
         }
 
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .search-bar input {
+                width: 100%;
+            }
+        }
+        .small-logo{
+            margin-top: 50px;
+        }
         
     </style>
     <script>
-        function toggleSidebar() {
-            const sidebar = document.querySelector('.sidebar');
-            const content = document.querySelector('.content');
-            const toggleBtn = document.querySelector('.toggle-btn');
-            sidebar.classList.toggle('open');
-            content.classList.toggle('expanded');
-            toggleBtn.classList.toggle('open');
+    // Ensure the sidebar starts open when the page loads
+    window.onload = function() {
+        const sidebar = document.querySelector('.sidebar');
+        const content = document.querySelector('.content');
+        const toggleBtn = document.querySelector('.toggle-btn');
+        
+        // Add the 'open' and 'expanded' classes when the page loads
+        sidebar.classList.add('open');
+        content.classList.add('expanded');
+        toggleBtn.classList.add('open');
+        toggleBtn.setAttribute('aria-label', 'Close sidebar');
+    };
 
-            if (sidebar.classList.contains('open')) {
-                toggleBtn.setAttribute('aria-label', 'Close sidebar');
-            } else {
-                toggleBtn.setAttribute('aria-label', 'Open sidebar');
-            }
+    function toggleSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        const content = document.querySelector('.content');
+        const toggleBtn = document.querySelector('.toggle-btn');
+        
+        // Toggle the sidebar state
+        sidebar.classList.toggle('open');
+        content.classList.toggle('expanded');
+        toggleBtn.classList.toggle('open');
+
+        if (sidebar.classList.contains('open')) {
+            toggleBtn.setAttribute('aria-label', 'Close sidebar');
+        } else {
+            toggleBtn.setAttribute('aria-label', 'Open sidebar');
         }
-    </script>
+    }
+</script>
+
 </head>
 
 <body>
@@ -433,6 +460,9 @@
         
         <h1>Admin Dashboard</h1>
 
+        <form action="{{ route('home') }}" method="GET" class="search-bar" style="display: flex; align-items: center;">
+            <input type="text" name="search" placeholder="Search by name..."  id="searchInput">
+        </form>
         <div class="notification" onclick="toggleDropdown()">
             <span class="notification-icon">&#128276;</span>
             <span class="notification-badge" id="notificationBadge"></span>
@@ -442,19 +472,19 @@
                         @if($request->recentRequest)
                             <!-- Do nothing if there's a recent request flag -->
                         @else
-                            <p onclick="handleDropdownClick('Student: {{ $request->name }}, Number: {{ $request->student_number }}')">
+                            <p onclick="handleDropdownClick('Student: {{ $request->last_name }},  Student Number: {{ $request->student_number }}')">
                                 @if($request->status == 'Accepted')
                                     🎉 <b>Accepted Request - <br> Requesting For {{ $request->document_type}}</b> <br> 
                                     <b>I'm a {{ $request->user_type}} - {{ $request->last_name }}, {{ $request->first_name }} {{ $request->middle_name }} ({{ $request->student_number }})</b> -
-                                    <br>Your request has been accepted! <br> <b>Status: {{ $request->status }}</b>
+                                    <br>This request has been accepted <br> <b>Status: {{ $request->status }}</b>
                                 @elseif($request->status == 'Rejected')
                                     ❌ <b>Rejected Request - <br> Requesting For {{ $request->document_type}}</b> <br> 
                                     <b>I'm a {{ $request->user_type}} - {{ $request->last_name }}, {{ $request->first_name }} {{ $request->middle_name }} ({{ $request->student_number }})</b> -
-                                    <br>Your request has been rejected. Please contact the Registrar for further assistance. <br> <b>Status: {{ $request->status }}</b>
+                                    <br>This request has been rejected. Please contact the Registrar for further assistance. <br> <b>Status: {{ $request->status }}</b>
                                 @else
                                     🕒 <b>New Request - <br> Requesting For {{ $request->document_type}}</b> <br> 
                                     <b>I'm a {{ $request->user_type}} - {{ $request->last_name }}, {{ $request->first_name }} {{ $request->middle_name }} ({{ $request->student_number }})</b> -
-                                    <br>Please visit the Registrar at the University of Pangasinan for further information. <br> <b>Status: {{ $request->status }}</b>
+                                    <br>This Request is still pending <br> <b>Status: {{ $request->status }}</b>
                                 @endif
                             </p>
                         @endif
@@ -471,7 +501,7 @@
     </div>
 
     <div class="sidebar">
-    <img src="{{ asset('image/UniLogo.png') }}" alt="Small Logo" class="small-logo">
+    <img src="{{ asset('image/UniLogoAdmin.png') }}" alt="Small Logo" class="small-logo">
 
         <a href="{{route ('home')}}">Dashboard</a>
         <!-- Use route helper for the admin requests page -->
@@ -482,9 +512,7 @@
 
 
     <div class="content">
-    <form action="{{ route('home') }}" method="GET" class="search-form1">
-    <input type="text" id="search-input" name="query" placeholder="Search requests..." value="{{ request()->input('query') }}" oninput="searchRequests()">
-</form>
+    
         <div class="dashboard">
             <div class="dashboard-item">
                 <h3>Total Requests</h3>
@@ -589,42 +617,6 @@
             alert(message); // You can change this to any action you want to perform
         }
     </script>
-    <script>
-    let debounceTimer;
-
-    function searchRequests() {
-        const input = document.getElementById('search-input');
-        const query = input.value;
-
-        // Only redirect if there's a query or if the input is cleared
-        const url = new URL("{{ route('admin.adminreq') }}");
-
-        // Update query parameter
-        if (query) {
-            url.searchParams.set('query', query);
-        } else {
-            url.searchParams.delete('query'); // Remove the query parameter if the input is empty
-        }
-
-        // Redirect to the updated URL
-        window.location.href = url.toString();
-    }
-
-    function handleInput() {
-        clearTimeout(debounceTimer); // Clear the previous timer
-        debounceTimer = setTimeout(() => {
-            // Delay for 300 milliseconds before calling searchRequests
-            searchRequests();
-        }, 200); // Adjust this delay as needed
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-        const inputField = document.getElementById('search-input');
-
-        // Add event listener for input changes
-        inputField.addEventListener('input', handleInput);
-    });
-</script>
 </body>
 
 </html>

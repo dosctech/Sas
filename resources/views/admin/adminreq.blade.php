@@ -70,13 +70,13 @@
             color:#ddd;
             text-decoration: none;
             padding: 10px;
-            margin: 30px 10px;
+            margin: 20px 10px;
             border-radius: 5px;
             transition: background-color 0.3s;
         }
 
         .sidebar a:hover {
-            background-color: black;
+            background-color: grey;
         }
 
         .toggle-btn {
@@ -125,11 +125,13 @@
             flex-grow: 1;
             transition: margin-left 0.3s ease;
             overflow-y: auto;
+            
         }
 
         .content.expanded {
             margin-left: 250px;
         }
+        
 
         .card {
             
@@ -138,7 +140,7 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
             margin: 20px; 
             padding: 20px; 
-            width: 1400px;
+            width: 100%;
             transition: transform 0.2s; 
         }
         
@@ -160,6 +162,7 @@
             border-collapse: collapse;
             margin-top: 15px;
             
+            
         }
 
         th,
@@ -168,22 +171,24 @@
             border: 1px solid #ddd;
             text-align: left;
             
+            
         }
 
         th {
-            background-color: #347928;
-            color: white;
+            background-color: #E4E0E1;
+            color: black;
             text-transform: uppercase;
             font-weight: bold;
         }
 
         td {
             color: #333;
+            
         }
 
         .btn {
             display: inline-block;
-            padding: 10px 20px;
+            padding: 5px 5px;
             background-color: #ff9800;
             color: white;
             text-align: center;
@@ -207,6 +212,9 @@
 
         .btn-reject {
             background-color: #dc3545;
+        }
+        .btn-delete {
+            background-color: grey;
         }
 
         .btn-reject:hover {
@@ -370,29 +378,44 @@
             outline: none;
             box-shadow: 0 2px 5px rgba(24, 85, 25, 0.4); /* Green shadow when focused */
         }
+        .small-logo{
+            margin-top: 50px;
+        }
         
         
     </style>
     <script>
-        function toggleSidebar() {
-            const sidebar = document.querySelector('.sidebar');
-            const content = document.querySelector('.content');
-            const toggleBtn = document.querySelector('.toggle-btn');
-            sidebar.classList.toggle('open');
-            content.classList.toggle('expanded');
-            toggleBtn.classList.toggle('open');
+    // Ensure the sidebar starts open when the page loads
+    window.onload = function() {
+        const sidebar = document.querySelector('.sidebar');
+        const content = document.querySelector('.content');
+        const toggleBtn = document.querySelector('.toggle-btn');
+        
+        // Add the 'open' and 'expanded' classes when the page loads
+        sidebar.classList.add('open');
+        content.classList.add('expanded');
+        toggleBtn.classList.add('open');
+        toggleBtn.setAttribute('aria-label', 'Close sidebar');
+    };
 
-            if (sidebar.classList.contains('open')) {
-                toggleBtn.setAttribute('aria-label', 'Close sidebar');
-            } else {
-                toggleBtn.setAttribute('aria-label', 'Open sidebar');
-            }
-        }
+    function toggleSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        const content = document.querySelector('.content');
+        const toggleBtn = document.querySelector('.toggle-btn');
+        
+        // Toggle the sidebar state
+        sidebar.classList.toggle('open');
+        content.classList.toggle('expanded');
+        toggleBtn.classList.toggle('open');
 
-        function confirmAction(message) {
-            return confirm(message);
+        if (sidebar.classList.contains('open')) {
+            toggleBtn.setAttribute('aria-label', 'Close sidebar');
+        } else {
+            toggleBtn.setAttribute('aria-label', 'Open sidebar');
         }
-    </script>
+    }
+</script>
+
 </head>
 
 <body>
@@ -429,6 +452,8 @@
     </div>
 
     <div class="sidebar">
+    <img src="{{ asset('image/UniLogoAdmin.png') }}" alt="Small Logo" class="small-logo">
+
         <a href="{{route ('home')}}">Dashboard</a>
         <a href="{{ route('admin.adminreq') }}">Student Requests</a>
         <a href="{{ route('admin.acceptedreq') }}">Accepted Requests</a>
@@ -436,7 +461,7 @@
     </div>
 
     <div class="content">
-        <div class="container mt-5">
+        <div class="container">
 
             @if(session('success'))
             <div class="alert alert-success">
@@ -445,6 +470,7 @@
             @endif
 
             @if($formData->count())
+            
             <div class="card">
     <div class="card-header">
         <h5 class="card-title">Request Details</h5>
@@ -485,7 +511,7 @@
                         <form action="{{ route('delete-request', $request->id) }}" method="POST" style="display:inline;" onsubmit="return confirmAction('Are you sure you want to delete this request?');">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-reject">Delete</button>
+                            <button type="submit" class="btn btn-delete">Delete</button>
                         </form>
                     @else
                         <a href="{{ route('edit-request', $request->id) }}" class="btn">Edit</a>
@@ -537,7 +563,7 @@
             </thead>
             <!-- Table body content here -->
         </table>
-        <div class="alert alert-info">NO RESULT FOUND, PERO IINOM TAYO SA BAHAY MAMAYA </div>
+        <div class="alert alert-info">NO RESULT FOUND</div>
     </div>
 </div>
 

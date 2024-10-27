@@ -81,7 +81,7 @@
             color:#ddd;
             text-decoration: none;
             padding: 10px;
-            margin: 30px 10px;
+            margin: 20px 10px;
             border-radius: 5px;
             transition: background-color 0.3s;
         }
@@ -348,8 +348,8 @@
 }
 
 thead tr {
-    background-color: #347928;
-    color: white;
+    background-color: #E4E0E1;
+    color: black;
     text-transform: uppercase;
     font-weight: bold;
     justify-content: center;
@@ -416,24 +416,43 @@ table, th, td {
     }
 }
 
+.small-logo{
+            margin-top: 50px;
+        }
         
     </style>
-    <script>
-        function toggleSidebar() {
-            const sidebar = document.querySelector('.sidebar');
-            const content = document.querySelector('.content');
-            const toggleBtn = document.querySelector('.toggle-btn');
-            sidebar.classList.toggle('open');
-            content.classList.toggle('expanded');
-            toggleBtn.classList.toggle('open');
+   <script>
+    // Ensure the sidebar starts open when the page loads
+    window.onload = function() {
+        const sidebar = document.querySelector('.sidebar');
+        const content = document.querySelector('.content');
+        const toggleBtn = document.querySelector('.toggle-btn');
+        
+        // Add the 'open' and 'expanded' classes when the page loads
+        sidebar.classList.add('open');
+        content.classList.add('expanded');
+        toggleBtn.classList.add('open');
+        toggleBtn.setAttribute('aria-label', 'Close sidebar');
+    };
 
-            if (sidebar.classList.contains('open')) {
-                toggleBtn.setAttribute('aria-label', 'Close sidebar');
-            } else {
-                toggleBtn.setAttribute('aria-label', 'Open sidebar');
-            }
+    function toggleSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        const content = document.querySelector('.content');
+        const toggleBtn = document.querySelector('.toggle-btn');
+        
+        // Toggle the sidebar state
+        sidebar.classList.toggle('open');
+        content.classList.toggle('expanded');
+        toggleBtn.classList.toggle('open');
+
+        if (sidebar.classList.contains('open')) {
+            toggleBtn.setAttribute('aria-label', 'Close sidebar');
+        } else {
+            toggleBtn.setAttribute('aria-label', 'Open sidebar');
         }
-    </script>
+    }
+</script>
+
 </head>
 
 <body>
@@ -470,6 +489,8 @@ table, th, td {
     </div>
 
     <div class="sidebar">
+    <img src="{{ asset('image/UniLogoAdmin.png') }}" alt="Small Logo" class="small-logo">
+
     <a href="{{route ('home')}}">Dashboard</a>
         <!-- Use route helper for the admin requests page -->
         <a href="{{ route('admin.adminreq') }}">Student Requests</a>
@@ -568,7 +589,7 @@ table, th, td {
         const query = input.value;
 
         // Only redirect if there's a query or if the input is cleared
-        const url = new URL("{{ route('admin.adminreq') }}");
+        const url = new URL("{{ route('admin.acceptedreq') }}");
 
         // Update query parameter
         if (query) {

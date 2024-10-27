@@ -226,4 +226,13 @@ class AdminController extends Controller
         // Return the CSV file as a response
         return Response::make($csvData, 200, $headers);
     }
+    public function destroy($id)
+{
+    // Find the item by ID and delete it
+    $item = RequestForm::findOrFail($id);
+    $item->delete();
+
+    // Redirect back with a success message
+    return redirect()->route('admin.adminreq')->with('success', 'Item deleted successfully.');
+}
 }

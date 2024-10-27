@@ -82,13 +82,13 @@
             color:#ddd;
             text-decoration: none;
             padding: 10px;
-            margin: 30px 10px;
+            margin: 20px 10px;
             border-radius: 5px;
             transition: background-color 0.3s;
         }
 
         .sidebar a:hover {
-            background-color: black;
+            background-color: grey;
         }
 
         .toggle-btn {
@@ -350,8 +350,8 @@
 }
 
 thead tr {
-    background-color: #347928;
-    color: white;
+    background-color: #E4E0E1;
+    color: black;
     text-transform: uppercase;
     font-weight: bold;
     justify-content: center;
@@ -417,23 +417,42 @@ table, th, td {
         text-align: left;
     }
 }
+.small-logo{
+            margin-top: 50px;
+        }
     </style>
     <script>
-        function toggleSidebar() {
-            const sidebar = document.querySelector('.sidebar');
-            const content = document.querySelector('.content');
-            const toggleBtn = document.querySelector('.toggle-btn');
-            sidebar.classList.toggle('open');
-            content.classList.toggle('expanded');
-            toggleBtn.classList.toggle('open');
+    // Ensure the sidebar starts open when the page loads
+    window.onload = function() {
+        const sidebar = document.querySelector('.sidebar');
+        const content = document.querySelector('.content');
+        const toggleBtn = document.querySelector('.toggle-btn');
+        
+        // Add the 'open' and 'expanded' classes when the page loads
+        sidebar.classList.add('open');
+        content.classList.add('expanded');
+        toggleBtn.classList.add('open');
+        toggleBtn.setAttribute('aria-label', 'Close sidebar');
+    };
 
-            if (sidebar.classList.contains('open')) {
-                toggleBtn.setAttribute('aria-label', 'Close sidebar');
-            } else {
-                toggleBtn.setAttribute('aria-label', 'Open sidebar');
-            }
+    function toggleSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        const content = document.querySelector('.content');
+        const toggleBtn = document.querySelector('.toggle-btn');
+        
+        // Toggle the sidebar state
+        sidebar.classList.toggle('open');
+        content.classList.toggle('expanded');
+        toggleBtn.classList.toggle('open');
+
+        if (sidebar.classList.contains('open')) {
+            toggleBtn.setAttribute('aria-label', 'Close sidebar');
+        } else {
+            toggleBtn.setAttribute('aria-label', 'Open sidebar');
         }
-    </script>
+    }
+</script>
+
 </head>
 
 <body>
@@ -470,6 +489,8 @@ table, th, td {
     </div>
 
     <div class="sidebar">
+    <img src="{{ asset('image/UniLogoAdmin.png') }}" alt="Small Logo" class="small-logo">
+
     <a href="{{route ('home')}}">Dashboard</a>
         <!-- Use route helper for the admin requests page -->
         <a href="{{ route('admin.adminreq') }}">Student Requests</a>
@@ -485,7 +506,7 @@ table, th, td {
             <div class="card-header">
                 <h5 class="card-title">Rejected Request</h5>
                 <form action="{{ route('admin.rejectedreq') }}" method="GET" class="search-form">
-                <input type="text" id="search-input" name="query" placeholder="Search..." value="{{ request()->input('query') }}" oninput="searchRequests()">
+                <input type="text" id="search-input" name="query" placeholder="Search requests..." value="{{ request()->input('query') }}" oninput="searchRequests()">
                 </form>
             </div>
             
@@ -569,7 +590,7 @@ table, th, td {
         const query = input.value;
 
         // Only redirect if there's a query or if the input is cleared
-        const url = new URL("{{ route('admin.adminreq') }}");
+        const url = new URL("{{ route('admin.rejectedreq') }}");
 
         // Update query parameter
         if (query) {
@@ -587,7 +608,7 @@ table, th, td {
         debounceTimer = setTimeout(() => {
             // Delay for 300 milliseconds before calling searchRequests
             searchRequests();
-        }, 300); // Adjust this delay as needed
+        }, 200); // Adjust this delay as needed
     }
 
     document.addEventListener('DOMContentLoaded', function () {
